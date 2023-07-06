@@ -3,6 +3,8 @@ import { createGlobalStyle } from "styled-components";
 import { createRoot } from "react-dom/client";
 import styled from "styled-components";
 import Homepage from "./Homepage";
+import CreateRoomPage from "./CreateRoomPage";
+import JoinRoomPage from "./JoinRoomPage";
 
 const GlobalStyle = createGlobalStyle`
   /* Add your global styles here */
@@ -36,8 +38,10 @@ const App = () => {
   return (
     <Container>
       <GlobalStyle />
-      <h1>Muaic Controller</h1>
+      <h1>Music Controller</h1>
       <Homepage />
+      <CreateRoomPage />
+      <JoinRoomPage />
     </Container>
   );
 };
