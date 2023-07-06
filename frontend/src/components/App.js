@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { createGlobalStyle } from "styled-components";
 import { createRoot } from "react-dom/client";
 import styled from "styled-components";
+import Homepage from "./Homepage";
 
 const GlobalStyle = createGlobalStyle`
   /* Add your global styles here */
@@ -36,6 +37,7 @@ const App = () => {
     <Container>
       <GlobalStyle />
       <h1>Muaic Controller</h1>
+      <Homepage />
     </Container>
   );
 };
