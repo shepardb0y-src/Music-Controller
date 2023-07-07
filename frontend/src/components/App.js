@@ -1,10 +1,21 @@
 import React, { Component } from "react";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Switch,
+  RouterProvider,
+  Route,
+  Link,
+  Redicrect,
+} from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import { createRoot } from "react-dom/client";
 import styled from "styled-components";
-import Homepage from "./Homepage";
-import CreateRoomPage from "./CreateRoomPage";
-import JoinRoomPage from "./JoinRoomPage";
+import Homepage from "../pages/Homepage";
+import CreateRoomPage from "../pages/CreateRoomPage";
+import JoinRoomPage from "../pages/JoinRoomPage";
+
+//Global styles
 
 const GlobalStyle = createGlobalStyle`
   /* Add your global styles here */
@@ -32,18 +43,35 @@ const GlobalStyle = createGlobalStyle`
   /* You can add more global styles as needed */
 `;
 
+// App Component Styles
+
 const Container = styled.div``;
 
+// createBrowserouter function
+
+// root component
+
+const Root = () => {
+  <>
+    <div>
+      <Outlet></Outlet>
+    </div>
+  </>;
+};
+
 const App = () => {
-  return (
-    <Container>
-      <GlobalStyle />
-      <h1>Music Controller</h1>
-      <Homepage />
-      <CreateRoomPage />
-      <JoinRoomPage />
-    </Container>
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route>
+        <Route path="/" element={<Root />} />
+        <Route path="/join" element={<JoinRoomPage />} />
+        <Route path="/create" element={<CreateRoomPage />} />
+        <Route index element={<Homepage />} />
+      </Route>
+    )
   );
+
+  return <RouterProvider router={router} />;
 };
 
 export default App;
