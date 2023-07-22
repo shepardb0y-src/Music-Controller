@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Room
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import RoomSerializer, CreateRoomSerializer
+
 
 
 class RoomSerializer(serializers.ModelSerializer):
