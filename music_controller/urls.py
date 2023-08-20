@@ -18,7 +18,8 @@ from django.urls import path, include, re_path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api', include('api.urls')),
+    path('', include('api.urls')),
+    # path('api', include('api.urls')) this is wrong and had me stuck for over a month/ path('', include('api.urls')), is correct and will enable the browser router and rest framework to not conflict
     path('', include('frontend.urls')),
-   
+
 ]
