@@ -1,15 +1,14 @@
 import styled from "styled-components";
-import * as React from "react";
-import Button from "@mui/material/Button";
-
+import React from "react";
 const Container = styled.div`
-  background-color: red;
+  background-color: yellow;
+  height: 100%;
+  width: 100%;
 `;
 const Homepage = () => {
   return (
     <Container>
       <h1>Homepage</h1>
-      <Button variant="contained">Hello World</Button>;
     </Container>
   );
 };
