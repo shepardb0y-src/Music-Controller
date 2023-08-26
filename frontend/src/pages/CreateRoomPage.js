@@ -1,4 +1,14 @@
-import React from "react";
+import * as React from "react";
+import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+// import TextField from "@mui/material/TextField";
+// import FormerHelperText from "@mui/material/FormerHelperText";
+// import FormControl from "@mui/material/FormControl";
+// import Radio from "@mui/material/Radio";
+// import RadioGroup from "@material-ui/RadioGroup";
+// import FormControlLabel from "@mui/material/FormControlLablel";
 
 import styled from "styled-components";
 
@@ -11,7 +21,11 @@ const Background = styled.div`
 const CreateRoomPage = () => {
   return (
     <Background>
-      <h1>Create</h1>
+      <Grid item xs={12} align="center">
+        <Typography variant="h4" color="initial">
+          Create Room
+        </Typography>
+      </Grid>
     </Background>
   );
 };
