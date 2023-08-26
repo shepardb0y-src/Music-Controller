@@ -4,16 +4,17 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 // import TextField from "@mui/material/TextField";
-// import FormerHelperText from "@mui/material/FormerHelperText";
-// import FormControl from "@mui/material/FormControl";
-// import Radio from "@mui/material/Radio";
-// import RadioGroup from "@material-ui/RadioGroup";
-// import FormControlLabel from "@mui/material/FormControlLablel";
+import FormHelperText from "@mui/material/FormHelperText";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
 
 import styled from "styled-components";
 
 const Background = styled.div`
-  background-color: purple;
+  // background-color: purple;
   height: 100%;
   width: 100%;
 `;
@@ -21,10 +22,33 @@ const Background = styled.div`
 const CreateRoomPage = () => {
   return (
     <Background>
-      <Grid item xs={12} align="center">
-        <Typography variant="h4" color="initial">
-          Create Room
-        </Typography>
+      <Grid container spacing={1}>
+        <Grid item xs={12} align="center">
+          <Typography variant="h4" color="initial">
+            Create Room
+          </Typography>
+        </Grid>
+        <Grid item xs={12} align="center">
+          <FormControl>
+            <FormHelperText>
+              <div align="center">Guest control of Playback State</div>
+            </FormHelperText>
+            <RadioGroup defaultValue="true">
+              <FormControlLabel
+                value="true"
+                control={<Radio color="primary" />}
+                label="Play/Pause"
+                labelPlacement="top"
+              />
+              <FormControlLabel
+                value="false"
+                control={<Radio color="secondary" />}
+                label="No Control"
+                labelPlacement="bottom"
+              />
+            </RadioGroup>
+          </FormControl>
+        </Grid>
       </Grid>
     </Background>
   );
