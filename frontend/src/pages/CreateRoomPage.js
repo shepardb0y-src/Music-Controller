@@ -29,9 +29,7 @@ const CreateRoomPage = () => {
         </Grid>
         <Grid item xs={12} align="center">
           <FormControl>
-            <FormHelperText>
-              <div align="center">Guest control of Playback State</div>
-            </FormHelperText>
+            <FormHelperText>Guest control of Playback State</FormHelperText>
             <RadioGroup defaultValue="true">
               <FormControlLabel
                 value="true"
@@ -52,6 +50,7 @@ const CreateRoomPage = () => {
         <Grid item xs={12} align="center">
           <FormControl>
             <TextField
+              type="number"
               required={true}
               // defaultValue={this.defaultVotes}
               inputProps={{
@@ -59,19 +58,20 @@ const CreateRoomPage = () => {
                 style: { textAlign: "center" },
               }}
             />
-            <FormHelperText>
-              <div align="center">Votes Required To Skip</div>
+            <FormHelperText align="center">
+              Votes Required To Skip
             </FormHelperText>
           </FormControl>
         </Grid>
 
         <Grid item xs={12} align="center">
-          <Button color="primary" variant="containec">
+          <Button color="primary" variant="contained">
             Create a Room
           </Button>
         </Grid>
         <Grid item xs={12} align="center">
-          <Button color="secondary" variant="container" to="/" component={Link}>
+          {/* to="/" component={Link} */}
+          <Button color="secondary" variant="contained">
             Back
           </Button>
         </Grid>
