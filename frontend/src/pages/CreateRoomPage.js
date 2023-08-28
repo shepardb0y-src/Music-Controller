@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -19,6 +19,8 @@ const Background = styled.div`
 `;
 
 const CreateRoomPage = () => {
+  const [guestCanPause, setguestCanPause] = useState(true);
+  const [votesToSkip, setvotesToSkip] = useState(0);
   return (
     <Background>
       <Grid container spacing={1}>
@@ -52,7 +54,7 @@ const CreateRoomPage = () => {
             <TextField
               type="number"
               required={true}
-              // defaultValue={this.defaultVotes}
+              defaultValue={votesToSkip}
               inputProps={{
                 min: 1,
                 style: { textAlign: "center" },
