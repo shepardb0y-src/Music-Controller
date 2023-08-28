@@ -22,10 +22,10 @@ const CreateRoomPage = () => {
   const [guestCanPause, setguestCanPause] = useState(true);
   const [votesToSkip, setvotesToSkip] = useState(0);
 
-  const handleVotesChange = () => {
+  const handleVotesChange = (e) => {
     setvotesToSkip({ votesToSkip: e.target.value });
   };
-  const handleRoomButtonedPressed = () => {
+  const handleRoomButtonedPressed = (e) => {
     console.log(votesToSkip, guestCanPause);
     const requestOptions = {
       method: "POST",
@@ -39,7 +39,7 @@ const CreateRoomPage = () => {
       .then((response) => response.json())
       .then((data) => console.log(data));
   };
-  const handleGusetChange = () => {
+  const handleGusetChange = (e) => {
     setguestCanPause({
       guestCanPause: e.target.value === "true" ? true : false,
     });
@@ -49,7 +49,6 @@ const CreateRoomPage = () => {
     <Background>
       <Grid container spacing={1}>
         <Grid item xs={12} align="center">
-          
           <Typography variant="h4" color="initial">
             Create Room
           </Typography>
