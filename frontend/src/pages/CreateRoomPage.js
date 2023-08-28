@@ -21,10 +21,35 @@ const Background = styled.div`
 const CreateRoomPage = () => {
   const [guestCanPause, setguestCanPause] = useState(true);
   const [votesToSkip, setvotesToSkip] = useState(0);
+
+  const handleVotesChange = () => {
+    setvotesToSkip({ votesToSkip: e.target.value });
+  };
+  const handleRoomButtonedPressed = () => {
+    console.log(votesToSkip, guestCanPause);
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        votes_to_skip: votesToSkip,
+        guest_can_pause: guestCanPause,
+      }),
+    };
+    fetch("/create-room", requestOptions)
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  };
+  const handleGusetChange = () => {
+    setguestCanPause({
+      guestCanPause: e.target.value === "true" ? true : false,
+    });
+  };
+
   return (
     <Background>
       <Grid container spacing={1}>
         <Grid item xs={12} align="center">
+          
           <Typography variant="h4" color="initial">
             Create Room
           </Typography>
@@ -32,7 +57,7 @@ const CreateRoomPage = () => {
         <Grid item xs={12} align="center">
           <FormControl>
             <FormHelperText>Guest control of Playback State</FormHelperText>
-            <RadioGroup defaultValue="true">
+            <RadioGroup defaultValue="true" onChange={handleGusetChange}>
               <FormControlLabel
                 value="true"
                 control={<Radio color="primary" />}
@@ -53,6 +78,8 @@ const CreateRoomPage = () => {
           <FormControl>
             <TextField
               type="number"
+              size="small"
+              onChange={handleVotesChange}
               required={true}
               defaultValue={votesToSkip}
               inputProps={{
@@ -60,14 +87,16 @@ const CreateRoomPage = () => {
                 style: { textAlign: "center" },
               }}
             />
-            <FormHelperText align="center">
-              Votes Required To Skip
-            </FormHelperText>
+            <FormHelperText>Votes Required To Skip</FormHelperText>
           </FormControl>
         </Grid>
 
         <Grid item xs={12} align="center">
-          <Button color="primary" variant="contained">
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={handleRoomButtonedPressed}
+          >
             Create a Room
           </Button>
         </Grid>
