@@ -74,7 +74,8 @@ const CreateRoomPage = () => {
         </Grid>
 
         <Grid item xs={12} align="center">
-          <FormControl>
+          <FormControl >
+            
             <TextField
               type="number"
               size="small"
