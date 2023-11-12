@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -9,6 +9,8 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 import styled from "styled-components";
 
@@ -22,14 +24,26 @@ const CreateRoomPage = () => {
   const [guestCanPause, setguestCanPause] = useState(true);
   const [votesToSkip, setvotesToSkip] = useState(0);
 
+  useEffect(() => {
+    console.log(votesToSkip, guestCanPause);
+    // const [guestCanPause, setguestCanPause] = useState(true);
+    // const [votesToSkip, setvotesToSkip] = useState(0);
+    //   // ... rest of your component code
+  }, []); // Make sure to include any dependencies if needed
+
   const handleVotesChange = (e) => {
-    setvotesToSkip({ votesToSkip: e.target.value });
+    setvotesToSkip(e.target.value);
   };
   const handleRoomButtonedPressed = (e) => {
-    console.log(votesToSkip, guestCanPause);
+    const data = { votes_to_skip: votesToSkip, guest_can_pause: guestCanPause };
+    console.log(data);
+    const csrftoken = Cookies.get("csrftoken");
+
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "X-CSRFToken": csrftoken },
+      // body:JSON.stringify(data)
+      //promise body
       body: JSON.stringify({
         votes_to_skip: votesToSkip,
         guest_can_pause: guestCanPause,
@@ -37,12 +51,21 @@ const CreateRoomPage = () => {
     };
     fetch("/create-room", requestOptions)
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => data);
+    // try{
+    //   const res =  axios
+    //   .post("/create-room", JSON.stringify(data), {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       "X-CSRFToken": csrftoken,
+    //     },
+    //   })}catch (error) {
+    //     console.error('Error fetching data:', error);
+    //   }
+    // }
   };
   const handleGusetChange = (e) => {
-    setguestCanPause({
-      guestCanPause: e.target.value === "true" ? true : false,
-    });
+    setguestCanPause(e.target.value === "true" ? true : false);
   };
 
   return (
@@ -55,6 +78,7 @@ const CreateRoomPage = () => {
         </Grid>
         <Grid item xs={12} align="center">
           <FormControl>
+            {/* <input type="hidden" name="csrfmiddlewaretoken" value={csrftoken} /> */}
             <FormHelperText>Guest control of Playback State</FormHelperText>
             <RadioGroup defaultValue="true" onChange={handleGusetChange}>
               <FormControlLabel
@@ -74,8 +98,7 @@ const CreateRoomPage = () => {
         </Grid>
 
         <Grid item xs={12} align="center">
-          <FormControl >
-            
+          <FormControl>
             <TextField
               type="number"
               size="small"

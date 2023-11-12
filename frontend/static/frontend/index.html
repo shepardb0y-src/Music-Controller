@@ -14,10 +14,15 @@
     />
   </head>
   <body>
+ 
     <div id="main">
       <div id="app"></div>
     </div>
 
+    <script>
+      const csrftoken = "{{ % csrftoken % }}";
+   </script>
+   
     <script src="{% static "frontend/main.js" %}"></script>
   </body>
 </html>
