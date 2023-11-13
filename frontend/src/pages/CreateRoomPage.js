@@ -39,30 +39,28 @@ const CreateRoomPage = () => {
     console.log(data);
     const csrftoken = Cookies.get("csrftoken");
 
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "X-CSRFToken": csrftoken },
-      // body:JSON.stringify(data)
-      //promise body
-      body: JSON.stringify({
-        votes_to_skip: votesToSkip,
-        guest_can_pause: guestCanPause,
-      }),
-    };
-    fetch("/create-room", requestOptions)
-      .then((response) => response.json())
-      .then((data) => data);
-    // try{
-    //   const res =  axios
-    //   .post("/create-room", JSON.stringify(data), {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       "X-CSRFToken": csrftoken,
-    //     },
-    //   })}catch (error) {
-    //     console.error('Error fetching data:', error);
-    //   }
-    // }
+    axios
+      .post("/create-room", data, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrftoken,
+        },
+      }) //returns the data from api differ from fetch by not need another
+      .then((response) => response)
+      .then((res) => console.log(res));
+
+    // const requestOptions = {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json", "X-CSRFToken": csrftoken },
+    //   //promise body
+    //   body: JSON.stringify({
+    //     votes_to_skip: votesToSkip,
+    //     guest_can_pause: guestCanPause,
+    //   }),
+    // };
+    // fetch("/create-room", requestOptions)
+    //   .then((response) => response.json())
+    //   .then((res) => console.log(res));
   };
   const handleGusetChange = (e) => {
     setguestCanPause(e.target.value === "true" ? true : false);
