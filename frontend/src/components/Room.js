@@ -9,8 +9,14 @@ const Room = () => {
   const roomcode = useMatch("/room/:roomcode");
   //   const roomcode = props.match.params;
   // Access params from the matched URL
-  let params = useParams("/room/:roomcode");
+
+  const getRoomDetails = () => {
+    fetch("/get-room" + "?code=" + roomcode.params.roomcode).then((response) =>
+      response.json().then((data) => console.log(data.votes_to_skip))
+    );
+  };
   console.log(roomcode);
+  getRoomDetails();
   return (
     <div>
       <h3>{roomcode.params.roomcode}</h3>
