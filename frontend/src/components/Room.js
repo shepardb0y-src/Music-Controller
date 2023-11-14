@@ -12,7 +12,7 @@ const Room = () => {
 
   const getRoomDetails = () => {
     fetch("/get-room" + "?code=" + roomcode.params.roomcode).then((response) =>
-      response.json().then((data) => console.log(data.votes_to_skip))
+      response.json().then((data) => setvotesToSkip(data.votes_to_skip))
     );
   };
   console.log(roomcode);
