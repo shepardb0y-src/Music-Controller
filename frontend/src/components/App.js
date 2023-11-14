@@ -14,6 +14,7 @@ import styled from "styled-components";
 import Homepage from "../pages/Homepage";
 import CreateRoomPage from "../pages/CreateRoomPage";
 import JoinRoomPage from "../pages/JoinRoomPage";
+import Room from "./Room";
 
 //Global styles
 
@@ -66,6 +67,7 @@ const App = () => {
         <Route path="/" element={<Root />} />
         <Route path="/join" element={<JoinRoomPage />} />
         <Route path="/create" element={<CreateRoomPage />} />
+        <Route path="/room/:roomcode" element={<Room />} />
         <Route index element={<Homepage />} />
       </Route>
     )
