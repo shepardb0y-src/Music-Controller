@@ -40,8 +40,8 @@ const Room = () => {
     const data = response.data;
     console.log(data);
     setvotesToSkip(data.votes_to_skip);
-    setHost(data.host);
-    setguestCanPause(data.guestCanPause);
+    setHost(data.is_host.toString());
+    setguestCanPause(data.guest_can_pause.toString());
   };
 
   useEffect(() => {
@@ -51,8 +51,12 @@ const Room = () => {
     <div>
       <h3>{roomcode.params.roomcode}</h3>
       <p>Votes:{votesToSkip}</p>
+      {console.log(guestCanPause)}
       <p>Gust Can Pause:{guestCanPause}</p>
       <p>Host:{isHost}</p>
+      {console.log(isHost)}
+      {/* <p>Gust Can Pause:{guestCanPause.toString()}</p>
+      <p>Host:{isHost.toString()}</p> */}
     </div>
   );
 };
