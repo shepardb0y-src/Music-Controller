@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useHistory } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -23,6 +23,7 @@ const Background = styled.div`
 const CreateRoomPage = () => {
   const [guestCanPause, setguestCanPause] = useState(true);
   const [votesToSkip, setvotesToSkip] = useState(0);
+  let navigate = useNavigate();
 
   useEffect(() => {
     console.log(votesToSkip, guestCanPause);
@@ -47,8 +48,8 @@ const CreateRoomPage = () => {
         },
       }) //returns the data from api differ from fetch by not need another
       .then((response) => response)
-      .then((res) => console.log(res));
-
+      .then((res) => navigate("/room/" + res.data.code));
+    //
     // const requestOptions = {
     //   method: "POST",
     //   headers: { "Content-Type": "application/json", "X-CSRFToken": csrftoken },
