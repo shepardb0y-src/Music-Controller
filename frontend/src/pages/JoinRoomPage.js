@@ -21,20 +21,32 @@ const JoinRoomPage = () => {
   };
 
   const handleRoomButtonedPressed = (e) => {
-    // const data = { votes_to_skip: votesToSkip, guest_can_pause: guestCanPause };
-    // console.log(data);
-    // const csrftoken = Cookies.get("csrftoken");
+    const code = { code: roomCode };
+    console.log(code);
+    const csrftoken = Cookies.get("csrftoken");
 
-    // axios
-    //   .post("/create-room", data, {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       "X-CSRFToken": csrftoken,
-    //     },
-    //   }) //returns the data from api differ from fetch by not need another
-    //   .then((response) => response)
-    //   .then((res) => navigate("/room/" + res.data.code));
-    console.log("onclick :", roomCode);
+    axios
+      .post("/join-room", code, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrftoken,
+        },
+      }) //returns the data from api differ from fetch by not need another
+      .then((response) => response)
+      .then((res) => console.log(res));
+    //
+    // const requestOptions = {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json", "X-CSRFToken": csrftoken },
+    //   //promise body
+    //   body: JSON.stringify({
+    //     votes_to_skip: votesToSkip,
+    //     guest_can_pause: guestCanPause,
+    //   }),
+    // };
+    // fetch("/create-room", requestOptions)
+    //   .then((response) => response.json())
+    //   .then((res) => console.log(res));
   };
   //
   return (
