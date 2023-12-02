@@ -6,14 +6,14 @@ import TextField from "@mui/material/TextField";
 import FormHelperText from "@mui/material/FormHelperText";
 import Cookies from "js-cookie";
 import axios from "axios";
-
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useHistory } from "react-router-dom";
 
 import { useState } from "react";
 
 const JoinRoomPage = () => {
   const [roomCode, setRoomCode] = useState("");
-  const [error, setError] = useState();
+  const [error, setError] = useState(false);
+  let navigate = useNavigate();
 
   const handleFieldChange = (e) => {
     setRoomCode(e.target.value);
@@ -25,6 +25,16 @@ const JoinRoomPage = () => {
     console.log(code);
     const csrftoken = Cookies.get("csrftoken");
 
+    // axios
+    //   .post("/join-room", code, {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       "X-CSRFToken": csrftoken,
+    //     },
+    //   }) //returns the data from api differ from fetch by not need another
+    //   .then((response) => response)
+    //   .then((res) => console.log(res));
+
     axios
       .post("/join-room", code, {
         headers: {
@@ -32,21 +42,22 @@ const JoinRoomPage = () => {
           "X-CSRFToken": csrftoken,
         },
       }) //returns the data from api differ from fetch by not need another
-      .then((response) => response)
-      .then((res) => console.log(res));
-    //
-    // const requestOptions = {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json", "X-CSRFToken": csrftoken },
-    //   //promise body
-    //   body: JSON.stringify({
-    //     votes_to_skip: votesToSkip,
-    //     guest_can_pause: guestCanPause,
-    //   }),
-    // };
-    // fetch("/create-room", requestOptions)
-    //   .then((response) => response.json())
-    //   .then((res) => console.log(res));
+      // .then((response) => response)
+      // .then((res) =>  navigate(`/room/${roomCode}`));
+
+      .then((response) => {
+        // Check if the response meets a certain condition
+        if (response.status === 200) {
+          // Handle success
+          navigate(`/room/${roomCode}`);
+          console.log("Request was successful:", response);
+        }
+      })
+      .catch((err) => {
+        // Handle errors
+        setError(true);
+        console.error("An error occurred:", err);
+      });
   };
   //
   return (
