@@ -13,6 +13,7 @@ import { useState } from "react";
 const JoinRoomPage = () => {
   const [roomCode, setRoomCode] = useState("");
   const [error, setError] = useState(false);
+  const [helperText, setHelpertext] = useState("");
   let navigate = useNavigate();
 
   const handleFieldChange = (e) => {
@@ -56,6 +57,7 @@ const JoinRoomPage = () => {
       .catch((err) => {
         // Handle errors
         setError(true);
+        setHelpertext("Invalid Room Code");
         console.error("An error occurred:", err);
       });
   };
@@ -74,7 +76,7 @@ const JoinRoomPage = () => {
             label="code"
             placeholder="Enter Room COde"
             value={roomCode}
-            helperText={roomCode}
+            helperText={helperText}
             variant="outlined"
             onChange={handleFieldChange}
           ></TextField>
