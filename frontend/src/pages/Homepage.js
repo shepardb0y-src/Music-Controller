@@ -20,12 +20,12 @@ const Homepage = () => {
         variant="contained"
         aria-label="outlined primary button group"
       >
-        <Button to="/join" component={Link}>
-          Join a Room
-        </Button>
-        <Button to="/create" component={Link}>
-          Create a Rooom
-        </Button>
+        <Link to="/join">
+          <Button>Join a Room</Button>
+        </Link>
+        <Link to="/create">
+          <Button>Create a Rooom</Button>
+        </Link>
       </ButtonGroup>
     </Container>
   );
