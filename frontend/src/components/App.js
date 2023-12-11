@@ -64,7 +64,7 @@ const App = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route>
-        <Route path="/" element={<Root />} />
+        <Route path="/" element={<Root />}  />
         <Route path="/join" element={<JoinRoomPage />} />
         <Route path="/create" element={<CreateRoomPage />} />
         <Route path="/room/:roomcode" element={<Room />} />

@@ -6,6 +6,7 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
+import axios from "axios";
 
 const Container = styled.div`
   background-color: yellow;
@@ -13,6 +14,19 @@ const Container = styled.div`
   width: 100%;
 `;
 const Homepage = () => {
+  const [roomcode, setRoomCode] = useState(null);
+  useEffect(() => {
+    fetchData();
+    console.log(`didMount:`);
+  }, []);
+
+  const fetchData = async () => {
+    const response = await axios.get("/user-in-room");
+    const data = response.data.code;
+    setRoomCode(data.code);
+    console.log(roomcode);
+    console.log(data);
+  };
   return (
     <Container>
       <h1>Homepage</h1>
