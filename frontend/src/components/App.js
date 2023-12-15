@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect, us } from "react";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -7,6 +7,7 @@ import {
   Route,
   Link,
   Redicrect,
+  useNavigate,
 } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import { createRoot } from "react-dom/client";
@@ -15,8 +16,14 @@ import Homepage from "../pages/Homepage";
 import CreateRoomPage from "../pages/CreateRoomPage";
 import JoinRoomPage from "../pages/JoinRoomPage";
 import Room from "./Room";
+import axios from "axios";
 
 //Global styles
+//render for route
+// render={()=>{ return roomcode
+//   ?(<Redirect to={`/room/${roomcode}`: re})
+
+//   }}
 
 const GlobalStyle = createGlobalStyle`
   /* Add your global styles here */
@@ -61,10 +68,19 @@ const Root = () => {
 };
 
 const App = () => {
+
+  // render={() => {
+  //   return this.state.roomCode ? (
+  //     <Redirect to={`/room/${this.state.roomCode}`} />
+  //   ) : (
+  //     this.renderHomePage()
+  //   );
+  // }}
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route>
-        <Route path="/" element={<Root />}  />
+        <Route path="/" element={<Root />} /> ?
         <Route path="/join" element={<JoinRoomPage />} />
         <Route path="/create" element={<CreateRoomPage />} />
         <Route path="/room/:roomcode" element={<Room />} />
@@ -73,7 +89,11 @@ const App = () => {
     )
   );
 
-  return <RouterProvider router={router} />;
+  return (
+    <div>
+      <RouterProvider router={router} />
+    </div>
+  );
 };
 
 export default App;
