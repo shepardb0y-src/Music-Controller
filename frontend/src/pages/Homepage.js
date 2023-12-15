@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useState, useEffect,createContext} from "react";
+import React, { useState, useEffect, createContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
@@ -7,7 +7,6 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
-
 
 const Container = styled.div`
   background-color: yellow;
@@ -42,11 +41,11 @@ const Homepage = () => {
     console.log(roomcode);
     setRoomCode(data);
     console.log(roomcode);
-  };
 
-  if (roomcode) {
-    return navigate("/room/" + roomcode);
-  }
+    if (roomcode === data) {
+      return navigate("/room/" + roomcode);
+    } else null;
+  };
 
   return (
     <Container>
