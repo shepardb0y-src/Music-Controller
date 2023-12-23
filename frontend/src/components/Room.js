@@ -1,13 +1,32 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useMatch, Routes, Route, useParams } from "react-router-dom";
+import {
+  useMatch,
+  Routes,
+  Route,
+  useParams,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import axios from "axios";
-const Room = () => {
+import Cookies from "js-cookie";
+import Button from "@mui/material/Button";
+const Room = (props) => {
   const [guestCanPause, setguestCanPause] = useState(true);
   const [votesToSkip, setvotesToSkip] = useState(0);
   const [isHost, setHost] = useState(false);
+  let navigate = useNavigate();
+  const rcode = useMatch("/room/:roomcode");
+  const [roomCode, setRoomCode] = useState(rcode);
+  const location = useLocation();
+  const [login, setLogin] = useState(true);
 
-  const roomcode = useMatch("/room/:roomcode");
+  console.log(location, " useLocation Hook");
+
+  const test = location.pathname;
+  // console.log(test);
+  console.log(login, "initialized login as true");
+
   //   const roomcode = props.match.params;
   // Access params from the matched URL
   // params is a special attribute connted to the router hook
@@ -38,8 +57,11 @@ const Room = () => {
   }, []);
 
   const fetchData = async () => {
+    // if (response.status === 200) {
+    //   clear();
+    // }
     const response = await axios.get(
-      "/get-room" + "?code=" + roomcode.params.roomcode
+      "/get-room" + "?code=" + roomCode.params.roomcode
     );
     const data = response.data;
     console.log(data);
@@ -48,9 +70,26 @@ const Room = () => {
     setguestCanPause(data.guest_can_pause.toString());
   };
 
+  const leaveRoomCode = () => {
+    // setLogin(false);
+    const csrftoken = Cookies.get("csrftoken");
+    axios
+      .post("/leave-room", {
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrftoken,
+        },
+      }) //returns the data from api differ from fetch by not need another
+      .then((response) => navigate("/"))
+      .then((res) => navigate("/"));
+
+    // console.log("login change", props);
+    // console.log(props.catchData(login));
+    // props.catchData(login);
+  };
   return (
     <div>
-      <h3>{roomcode.params.roomcode}</h3>
+      <h3>{roomCode.params.roomcode}</h3>
       <p>Votes:{votesToSkip}</p>
       {console.log(guestCanPause)}
       <p>Gust Can Pause:{guestCanPause}</p>
@@ -58,6 +97,12 @@ const Room = () => {
       {console.log(isHost)}
       {/* <p>Gust Can Pause:{guestCanPause.toString()}</p>
       <p>Host:{isHost.toString()}</p> */}
+
+      {/*leave room button  GOES HERE*/}
+
+      <div>
+        <Button onClick={leaveRoomCode}>Leave Rooom</Button>
+      </div>
     </div>
   );
 };

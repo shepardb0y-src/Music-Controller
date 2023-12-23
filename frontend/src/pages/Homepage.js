@@ -13,7 +13,7 @@ const Container = styled.div`
   height: 100%;
   width: 100%;
 `;
-const Homepage = () => {
+const Homepage = ({ props }) => {
   // const [roomcode, setRoomCode] = useState(null);
   // useEffect(() => {
   //   fetchData();
@@ -28,7 +28,8 @@ const Homepage = () => {
   //   console.log(data);
   // };
 
-  const [roomcode, setRoomCode] = useState(null);
+  const [roomcode, setRoomCode] = useState("");
+  // const [loggin, setLoggin] = useState(true);
   const navigate = useNavigate();
   useEffect(() => {
     fetchData();
@@ -36,15 +37,21 @@ const Homepage = () => {
 
   const fetchData = async () => {
     const response = await axios.get("/user-in-room");
+    console.log(response);
     const data = response.data.code;
     console.log(data);
     console.log(roomcode);
     setRoomCode(data);
     console.log(roomcode);
 
-    if (roomcode === data) {
-      return navigate("/room/" + roomcode);
-    } else null;
+    // data === roomcode && props === true
+    // if (data === roomcode) {
+    //   return navigate("/room/" + roomcode);
+    // } else return navigate("/");
+
+    // if (data) {
+    //   return navigate("/room/" + roomcode);
+    // } else navigate("/");
   };
 
   return (

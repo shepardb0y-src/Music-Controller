@@ -15,7 +15,7 @@ const JoinRoomPage = () => {
   const [error, setError] = useState(false);
   const [helperText, setHelpertext] = useState("");
   let navigate = useNavigate();
-
+  
   const handleFieldChange = (e) => {
     setRoomCode(e.target.value);
     console.log(roomCode);

@@ -23,6 +23,7 @@ const Background = styled.div`
 const CreateRoomPage = () => {
   const [guestCanPause, setguestCanPause] = useState(true);
   const [votesToSkip, setvotesToSkip] = useState(0);
+  const [code, setCode] = useState(0);
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -35,33 +36,38 @@ const CreateRoomPage = () => {
   const handleVotesChange = (e) => {
     setvotesToSkip(e.target.value);
   };
-  const handleRoomButtonedPressed = (e) => {
+  const handleRoomButtonedPressed = async (e) => {
     const data = { votes_to_skip: votesToSkip, guest_can_pause: guestCanPause };
     console.log(data);
     const csrftoken = Cookies.get("csrftoken");
 
-    axios
-      .post("/create-room", data, {
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": csrftoken,
-        },
-      }) //returns the data from api differ from fetch by not need another
-      .then((response) => response)
-      .then((res) => navigate("/room/" + res.data.code));
-    //
-    // const requestOptions = {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json", "X-CSRFToken": csrftoken },
-    //   //promise body
-    //   body: JSON.stringify({
-    //     votes_to_skip: votesToSkip,
-    //     guest_can_pause: guestCanPause,
-    //   }),
-    // };
-    // fetch("/create-room", requestOptions)
-    //   .then((response) => response.json())
-    //   .then((res) => console.log(res));
+    //     axios
+    //       .post("/create-room", data, {
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //           "X-CSRFToken": csrftoken,
+    //         },
+    //       }) //returns the data from api differ from fetch by not need another
+    //       // .then((response) => response)
+    //       // .then((res) => setCode(res.data.code));
+    // // if i turn this into axios i can extraxt the roomcode and pas as props to home page can only naviaget in the .then
+    //     // console.log(code);
+    //     // navigate("/room/"+ code)
+
+    const res = await axios.post("/create-room", data, {
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken,
+      },
+    });
+
+    const dataone = res.data;
+    const code = res.data.code;
+    console.log(dataone);
+
+    console.log(code);
+
+    navigate("/room/" + code);
   };
   const handleGusetChange = (e) => {
     setguestCanPause(e.target.value === "true" ? true : false);

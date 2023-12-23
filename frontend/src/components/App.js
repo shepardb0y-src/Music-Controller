@@ -6,7 +6,6 @@ import {
   RouterProvider,
   Route,
   Link,
-  Redicrect,
   useNavigate,
 } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
@@ -68,15 +67,38 @@ const Root = () => {
 };
 
 const App = () => {
+  const [roomcode, setRoomCode] = useState({ roomcode: null });
+  const [data, setdata] = useState("");
 
-  // render={() => {
-  //   return this.state.roomCode ? (
-  //     <Redirect to={`/room/${this.state.roomCode}`} />
-  //   ) : (
-  //     this.renderHomePage()
-  //   );
-  // }}
+  // useEffect(() => {
+  //   fetchData();
+  //   console.log(`didMount:`);
 
+  // }, []);
+
+  // const fetchData = async () => {
+  //   const response = await axios.get("/user-in-room");
+  //   const data = response.data.code;
+  //   setRoomCode(data.code);
+  //   console.log(roomcode);
+  //   console.log(data);
+  // };
+
+  //for lifting state
+
+  // const fetchData = (props) => {
+  //   console.log(props, "prop");
+  //   setdata(props);
+  // };
+
+  const clearRoom = () => {
+    setRoomCode({
+      code: null,
+    });
+  };
+  // const changelogin = () => {
+  //   setLoggin(false);
+  // };
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route>
