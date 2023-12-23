@@ -23,7 +23,7 @@ const Background = styled.div`
 const CreateRoomPage = () => {
   const [guestCanPause, setguestCanPause] = useState(true);
   const [votesToSkip, setvotesToSkip] = useState(0);
-  const [code, setCode] = useState(0);
+  const [codes, setCodes] = useState(0);
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -68,6 +68,8 @@ const CreateRoomPage = () => {
     console.log(code);
 
     navigate("/room/" + code);
+    setCodes(codes);
+    console.log(code, "codes!!!!!!!!!!!!!!!!!!!!!!!!!!!");
   };
   const handleGusetChange = (e) => {
     setguestCanPause(e.target.value === "true" ? true : false);

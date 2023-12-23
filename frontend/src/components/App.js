@@ -86,10 +86,10 @@ const App = () => {
 
   //for lifting state
 
-  // const fetchData = (props) => {
-  //   console.log(props, "prop");
-  //   setdata(props);
-  // };
+  const fetchData = (data) => {
+    console.log(data, "prop passed from child to parent");
+    // setdata(item);
+  };
 
   const clearRoom = () => {
     setRoomCode({
@@ -106,7 +106,7 @@ const App = () => {
         <Route path="/join" element={<JoinRoomPage />} />
         <Route path="/create" element={<CreateRoomPage />} />
         <Route path="/room/:roomcode" element={<Room />} />
-        <Route index element={<Homepage />} />
+        <Route index element={<Homepage size={100} catchdata={fetchData} />} />
       </Route>
     )
   );

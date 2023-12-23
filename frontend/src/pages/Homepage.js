@@ -13,7 +13,8 @@ const Container = styled.div`
   height: 100%;
   width: 100%;
 `;
-const Homepage = ({ props }) => {
+const Homepage = ({ size, catchdata }) => {
+  console.log(size);
   // const [roomcode, setRoomCode] = useState(null);
   // useEffect(() => {
   //   fetchData();
@@ -29,10 +30,12 @@ const Homepage = ({ props }) => {
   // };
 
   const [roomcode, setRoomCode] = useState("");
+  const [test, setTest] = useState("test");
   // const [loggin, setLoggin] = useState(true);
   const navigate = useNavigate();
   useEffect(() => {
     fetchData();
+    catchdata(test);
   }, [roomcode]);
 
   const fetchData = async () => {
