@@ -71,10 +71,10 @@ const CreateRoomPage = ({ catchData }) => {
     // .then((res) =>  navigate(`/room/${roomCode}`));
     const res3 = res2.data;
     console.log(res3);
-    if (response.status === 200) {
+    if (res2.status === 200) {
       // Handle success
 
-      console.log("Request was successful:", response);
+      console.log("Request was successful:", res2.status);
     }
   };
 

@@ -49,7 +49,7 @@ const Homepage = ({ dataone }) => {
     // console.log(code);
     // catchdata(test);
     console.log(dataone, "dataone prop in useeffect of hompage");
-  }, []);
+  }, [roomcode]);
 
   const fetchData = async () => {
     const response = await axios.get("/user-in-room");
@@ -57,8 +57,11 @@ const Homepage = ({ dataone }) => {
     // const res = response.data.code;
     // console.log(res);
 
-    setRoomCode({ roomcode: response.data.code });
-    console.log(roomcode, "state change of room code should be response");
+    setRoomCode(response.data.code);
+    console.log(
+      roomcode,
+      "state change of room code should be response, used to only happen when i would join the room manually now it shows when i create the room"
+    );
 
     // data === roomcode && props === true
     // if (res === null) {
@@ -66,10 +69,9 @@ const Homepage = ({ dataone }) => {
     //   return navigate([-1]);
     // } else navigate("/room/" + roomcode);
     /// re direct to room is there is a reeposne / even going to the null rooms after room is deleted
-    //   if (response) {
-    //     navigate("/room/" + roomcode);
-    //   } else navigate("/");
-    // };
+    // if (response) {
+    //   navigate("/room/" + roomcode);
+    // } else navigate("/");
   };
 
   console.log(dataone, "dataone prop, outside of use effect in homepage");
