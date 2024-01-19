@@ -7,6 +7,8 @@ import {
   Route,
   Link,
   useNavigate,
+  useParams,
+  useOutletContext,
 } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import { createRoot } from "react-dom/client";
@@ -16,9 +18,7 @@ import CreateRoomPage from "../pages/CreateRoomPage";
 import JoinRoomPage from "../pages/JoinRoomPage";
 import Room from "./Room";
 import axios from "axios";
-
-//Global styles
-//render for route
+import UserContext from "./UserContext";
 // render={()=>{ return roomcode
 //   ?(<Redirect to={`/room/${roomcode}`: re})
 
@@ -67,14 +67,31 @@ const Root = () => {
 };
 
 const App = () => {
-  const [roomcode, setRoomCode] = useState({ roomcode: null });
-  const [data, setdata] = useState("");
+  const [roomcode, setRoomCode] = useState("");
+  const [dataone, setdataone] = useState("");
+  const [user, setUser] = useState("user context");
+  const [test, setTest] = useState("test");
+  let params = useParams();
+  // console.log(params.roomcode, "params, in app"); // "hotspur"
 
-  // useEffect(() => {
-  //   fetchData();
-  //   console.log(`didMount:`);
+  console.log(user, "roomcode");
 
-  // }, []);
+  useEffect(() => {
+    catchData();
+    console.log(dataone, "return code ");
+    // setTest(codez);
+    // let codez = dataone;
+    // console.log(codez, "codez");
+    // console.log(test, "test");
+
+    // console.log(dataone.roomcode, "dataone lifted outside of fetch app");
+
+    //im trying to grab the room code from dataone to pas to the homepage routee route
+    // if (dataone) {
+    //   setRoomCode(dataone);
+    //   console.log(roomcode, "if bloack in app use eefect");
+    // }
+  }, [dataone]);
 
   // const fetchData = async () => {
   //   const response = await axios.get("/user-in-room");
@@ -85,37 +102,42 @@ const App = () => {
   // };
 
   //for lifting state
+  // console.log(dataone, "dataone lifted outside of fetch app with golbal state");
+  // let codez = dataone;
+  // console.log(codez, "codez");
 
-  const fetchData = (data) => {
-    console.log(data, "prop passed from child to parent");
-    // setdata(item);
-  };
+  const catchData = (code) => {
+    // console.log(data, "prop passed from child to parent");
+    console.log(code, "lifted from create room to APP");
+    // let test = code;
+    // console.log(test, "+ roomcode");
 
-  const clearRoom = () => {
-    setRoomCode({
-      code: null,
-    });
+    setdataone(code);
+
+    console.log(dataone, "dataone lifted to APp!");
   };
+  // console.log(user, "context");
+
   // const changelogin = () => {
   //   setLoggin(false);
   // };
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route>
-        <Route path="/" element={<Root />} /> ?
+        <Route path="/" element={<Root />} />
+        <Route index element={<Homepage dataone={dataone} />} />
+
         <Route path="/join" element={<JoinRoomPage />} />
-        <Route path="/create" element={<CreateRoomPage />} />
-        <Route path="/room/:roomcode" element={<Room />} />
-        <Route index element={<Homepage size={100} catchdata={fetchData} />} />
+        <Route path="/create" element={<CreateRoomPage catchData={catchData}/>} />
+        <Route
+          path="/room/:roomcode"
+          element={<Room  />}
+        />
       </Route>
     )
   );
 
-  return (
-    <div>
-      <RouterProvider router={router} />
-    </div>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default App;

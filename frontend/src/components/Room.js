@@ -1,17 +1,21 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   useMatch,
+  useParmas,
   Routes,
   Route,
   useParams,
   useNavigate,
   useLocation,
+  Link,
 } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import Button from "@mui/material/Button";
-const Room = (props) => {
+import UserContext from "./UserContext";
+const Room = ({ catchData, setUser }) => {
+  // const { cox, setCox } = useContext(UseContext);
   const [guestCanPause, setguestCanPause] = useState(true);
   const [votesToSkip, setvotesToSkip] = useState(0);
   const [isHost, setHost] = useState(false);
@@ -20,9 +24,12 @@ const Room = (props) => {
   const [roomCode, setRoomCode] = useState(rcode);
   const location = useLocation();
   const [login, setLogin] = useState(true);
-
+  const value = useContext(UserContext);
   console.log(location, " useLocation Hook");
-
+  let params = useParams();
+  let params1 = params.roomcode;
+  console.log(params1, "paramsroompage"); // "hotspur"
+  // catchdata(params, "params trying to be lifted");
   const test = location.pathname;
   // console.log(test);
   console.log(login, "initialized login as true");
@@ -51,6 +58,7 @@ const Room = (props) => {
   //   console.log(roomcode);
   // };
   // getRoomDetails();
+
   useEffect(() => {
     fetchData();
     console.log(`didMount:`);
@@ -64,10 +72,16 @@ const Room = (props) => {
       "/get-room" + "?code=" + roomCode.params.roomcode
     );
     const data = response.data;
-    console.log(data);
+    console.log(data, "room response.data");
     setvotesToSkip(data.votes_to_skip);
     setHost(data.is_host.toString());
     setguestCanPause(data.guest_can_pause.toString());
+
+    // catchdata(params1, "lifted tryan");
+    // setUser(data.code);
+
+    // console.log(data.code);
+    // const user = useContext(UserContext);
   };
 
   const leaveRoomCode = () => {
@@ -80,13 +94,31 @@ const Room = (props) => {
           "X-CSRFToken": csrftoken,
         },
       }) //returns the data from api differ from fetch by not need another
-      .then((response) => navigate("/"))
+      .then((response) => console.log(response))
       .then((res) => navigate("/"));
 
     // console.log("login change", props);
     // console.log(props.catchData(login));
     // props.catchData(login);
   };
+
+  // const res = await axios.post("/create-room", data, {
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     "X-CSRFToken": csrftoken,
+  //   },
+  // });
+
+  // const dataone = res.data;
+  // const code = res.data.code;
+  // console.log(dataone);
+
+  // console.log(code);
+
+  // navigate("/room/" + code);
+  // setCodes(code);
+  // catchdata(code);
+  // console.log(code, "codes!!!!!!!!!!!!!!!!!!!!!!!!!!!");
   return (
     <div>
       <h3>{roomCode.params.roomcode}</h3>
@@ -94,6 +126,7 @@ const Room = (props) => {
       {console.log(guestCanPause)}
       <p>Gust Can Pause:{guestCanPause}</p>
       <p>Host:{isHost}</p>
+      <p>Host:{value}</p>
       {console.log(isHost)}
       {/* <p>Gust Can Pause:{guestCanPause.toString()}</p>
       <p>Host:{isHost.toString()}</p> */}
@@ -103,6 +136,9 @@ const Room = (props) => {
       <div>
         <Button onClick={leaveRoomCode}>Leave Rooom</Button>
       </div>
+      <Link to="/">
+        <Button>Go Home</Button>
+      </Link>
     </div>
   );
 };

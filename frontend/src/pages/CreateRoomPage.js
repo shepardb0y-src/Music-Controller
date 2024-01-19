@@ -20,11 +20,12 @@ const Background = styled.div`
   width: 100%;
 `;
 
-const CreateRoomPage = () => {
+const CreateRoomPage = ({ catchData }) => {
   const [guestCanPause, setguestCanPause] = useState(true);
   const [votesToSkip, setvotesToSkip] = useState(0);
-  const [codes, setCodes] = useState(0);
+  const [codes, setCodes] = useState("lifted code test");
   let navigate = useNavigate();
+  // console.log(dataone, "we lifiting state!");
 
   useEffect(() => {
     console.log(votesToSkip, guestCanPause);
@@ -41,19 +42,6 @@ const CreateRoomPage = () => {
     console.log(data);
     const csrftoken = Cookies.get("csrftoken");
 
-    //     axios
-    //       .post("/create-room", data, {
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //           "X-CSRFToken": csrftoken,
-    //         },
-    //       }) //returns the data from api differ from fetch by not need another
-    //       // .then((response) => response)
-    //       // .then((res) => setCode(res.data.code));
-    // // if i turn this into axios i can extraxt the roomcode and pas as props to home page can only naviaget in the .then
-    //     // console.log(code);
-    //     // navigate("/room/"+ code)
-
     const res = await axios.post("/create-room", data, {
       headers: {
         "Content-Type": "application/json",
@@ -61,16 +49,35 @@ const CreateRoomPage = () => {
       },
     });
 
-    const dataone = res.data;
+    // const dataz = res.data;
     const code = res.data.code;
-    console.log(dataone);
-
     console.log(code);
 
+    //cant i jopin the room here ?
     navigate("/room/" + code);
-    setCodes(codes);
+    // this is going in the url so the UselOcation hook can grab it in the room
+    setCodes(code);
+    catchData(code);
     console.log(code, "codes!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    const codez = { code: code };
+
+    const res2 = await axios.post("/join-room", codez, {
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken,
+      },
+    }); //returns the data from api differ from fetch by not need another
+    // .then((response) => response)
+    // .then((res) =>  navigate(`/room/${roomCode}`));
+    const res3 = res2.data;
+    console.log(res3);
+    if (response.status === 200) {
+      // Handle success
+
+      console.log("Request was successful:", response);
+    }
   };
+
   const handleGusetChange = (e) => {
     setguestCanPause(e.target.value === "true" ? true : false);
   };
