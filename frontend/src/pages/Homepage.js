@@ -72,6 +72,11 @@ const Homepage = ({ dataone }) => {
     // if (response) {
     //   navigate("/room/" + roomcode);
     // } else navigate("/");
+//nullish coalacing to direct route to hompage if the response is falsy or nll then i made a if statment if trthy to navigate to the room page.
+    response ?? navigate("/");
+    if (response.data.code) {
+      navigate("/room/" + roomcode);
+    } else navigate("/");
   };
 
   console.log(dataone, "dataone prop, outside of use effect in homepage");
