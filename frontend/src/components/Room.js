@@ -24,6 +24,7 @@ const Room = ({ catchData, setUser }) => {
   const [roomCode, setRoomCode] = useState(rcode);
   const location = useLocation();
   const [login, setLogin] = useState(true);
+  const [spotifyAuthentication, setspotifyAuthentication] = useState(false);
   const value = useContext(UserContext);
   console.log(location, " useLocation Hook");
   let params = useParams();
@@ -34,40 +35,12 @@ const Room = ({ catchData, setUser }) => {
   // console.log(test);
   console.log(login, "initialized login as true");
 
-  //   const roomcode = props.match.params;
-  // Access params from the matched URL
-  // params is a special attribute connted to the router hook
-
-  /// convert to axios
-  // currently http://127.0.0.1:8000/room/KNOPPE is giving a 404 error on GET request from
-  // const getRoomDetails = () => {
-  //   fetch("/get-room" + "?code=" + roomcode.params.roomcode).then((response) =>
-  //     response.json().then((data) => setvotesToSkip(data.votes_to_skip))
-  //   );
-  // };g
-  // const getRoomDetails = () => {
-  //   axios
-  //     .get("/get-room" + "?code=" + roomcode.params.roomcode) //returns the data from api differ from fetch by not need another
-  //     .then((response) => response)
-  //     .then((res) =>
-  //       setvotesToSkip({
-  //         votesToSkip: res.data.votes_to_skip,
-  //       })
-  //     );
-
-  //   console.log(roomcode);
-  // };
-  // getRoomDetails();
-
   useEffect(() => {
     fetchData();
     console.log(`didMount:`);
   }, []);
 
   const fetchData = async () => {
-    // if (response.status === 200) {
-    //   clear();
-    // }
     const response = await axios.get(
       "/get-room" + "?code=" + roomCode.params.roomcode
     );
@@ -76,12 +49,9 @@ const Room = ({ catchData, setUser }) => {
     setvotesToSkip(data.votes_to_skip);
     setHost(data.is_host.toString());
     setguestCanPause(data.guest_can_pause.toString());
-
-    // catchdata(params1, "lifted tryan");
-    // setUser(data.code);
-
-    // console.log(data.code);
-    // const user = useContext(UserContext);
+    // isHost ? authenticateSpotify() : null;
+    // i need an if statment here to ensure the host is tru then to launch the authentatoin function
+    authenticateSpotify();
   };
 
   const leaveRoomCode = () => {
@@ -96,29 +66,43 @@ const Room = ({ catchData, setUser }) => {
       }) //returns the data from api differ from fetch by not need another
       .then((response) => console.log(response))
       .then((res) => navigate("/"));
-
-    // console.log("login change", props);
-    // console.log(props.catchData(login));
-    // props.catchData(login);
   };
 
-  // const res = await axios.post("/create-room", data, {
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     "X-CSRFToken": csrftoken,
-  //   },
-  // });
+  // const fetchData = async () => {
 
-  // const dataone = res.data;
-  // const code = res.data.code;
-  // console.log(dataone);
+  //   const response = await axios.get(
+  //     "/get-room" + "?code=" + roomCode.params.roomcode
+  //   );
+  //   const data = response.data;
+  //   console.log(data, "room response.data");
+  //   setvotesToSkip(data.votes_to_skip);
+  //   setHost(data.is_host.toString());
+  //   setguestCanPause(data.guest_can_pause.toString());
 
-  // console.log(code);
+  // };
+  const authenticateSpotify = async () => {
+    const response = await axios.get("/spotify/is-authenticated");
+    //data.status
+    console.log(response, "authspot");
+    setspotifyAuthentication({ spotifyAuthentication: response.status });
+    // .then((response) => response.json())
+    // .then((data) => {
+    //   this.setState({ spotifyAuthenticated: data.status });
+    //   console.log(data.status);
+    console.log(spotifyAuthentication);
+    // need to change to async
+    if (response.status) {
+      const res2 = await axios.get("/spotify/get-auth-url");
+      const res3 = res2.data;
+      const res4 = res2.data.url;
+      console.log(res3);
+      console.log(res4);
+      //// this reirects to spotify
+      window.location.replace(res4);
+    }
+    // });
+  };
 
-  // navigate("/room/" + code);
-  // setCodes(code);
-  // catchdata(code);
-  // console.log(code, "codes!!!!!!!!!!!!!!!!!!!!!!!!!!!");
   return (
     <div>
       <h3>{roomCode.params.roomcode}</h3>
