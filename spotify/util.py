@@ -1,6 +1,6 @@
 from .models import SpotifyToken
 from django.utils import timezone
-from datetime import timedelta
+from datetime import timedelta, datetime
 from .credentials import CLIENT_ID, CLIENT_SECRET
 from requests import post, put, get
 
@@ -19,7 +19,7 @@ def get_user_tokens(session_id):
 
 def update_or_create_user_tokens(session_id, access_token, token_type, expires_in, refresh_token):
     tokens = get_user_tokens(session_id)
-    expires_in = timezone.now() + timedelta(seconds=expires_in)
+    expires_in = datetime.now() + timedelta(seconds=expires_in)
 
     if tokens:
         tokens.access_token = access_token
@@ -37,13 +37,43 @@ def update_or_create_user_tokens(session_id, access_token, token_type, expires_i
 def is_spotify_authenticated(session_id):
     tokens = get_user_tokens(session_id)
     if tokens:
+        now = timezone.now()
         expiry = tokens.expires_in
-        if expiry <= timezone.now():
+        if expiry > now:
             refresh_spotify_token(session_id)
 
         return True
 
     return False
+
+
+
+# def update_or_create_user_tokens(session_id, access_token, token_type, expires_in, refresh_token):
+#     # Get the existing tokens or create new ones
+#     tokens, created = SpotifyToken.objects.get_or_create(user=session_id)
+
+#     # Update the token values
+#     tokens.access_token = access_token
+#     tokens.refresh_token = refresh_token
+#     tokens.expires_in = expires_in
+#     tokens.token_type = token_type
+#     tokens.save()
+
+# def is_spotify_authenticated(session_id):
+#     # Get the tokens associated with the session_id
+#     tokens = SpotifyToken.objects.filter(user=session_id).first()
+
+#     # Check if tokens exist and if they are not expired
+#     if tokens:
+#         now = timezone.now()  # Make datetime.now() timezone-aware
+#         if tokens.expires_in > now:
+#             return True
+#         else:
+#             # Tokens are expired, perform token refresh here if needed
+#             # refresh_spotify_token(session_id)
+#             pass
+
+#     return False
 
 
 def refresh_spotify_token(session_id):
