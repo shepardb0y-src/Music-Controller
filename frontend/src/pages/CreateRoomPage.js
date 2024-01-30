@@ -24,6 +24,7 @@ const CreateRoomPage = ({ catchData }) => {
   const [guestCanPause, setguestCanPause] = useState(true);
   const [votesToSkip, setvotesToSkip] = useState(0);
   const [codes, setCodes] = useState("lifted code test");
+  const [spotifyAuthentication, setspotifyAuthentication] = useState(false);
   let navigate = useNavigate();
   // console.log(dataone, "we lifiting state!");
 
@@ -38,6 +39,7 @@ const CreateRoomPage = ({ catchData }) => {
     setvotesToSkip(e.target.value);
   };
   const handleRoomButtonedPressed = async (e) => {
+    authenticateSpotify();
     const data = { votes_to_skip: votesToSkip, guest_can_pause: guestCanPause };
     console.log(data);
     const csrftoken = Cookies.get("csrftoken");
@@ -77,7 +79,33 @@ const CreateRoomPage = ({ catchData }) => {
       console.log("Request was successful:", res2.status);
     }
   };
+  const authenticateSpotify = async () => {
+    const response = await axios.get("/spotify/is-authenticated");
+    //data.status
+    console.log(response, "authspot");
+    setspotifyAuthentication({ spotifyAuthentication: response.status });
+    // .then((response) => response.json())
+    // .then((data) => {
+    //   this.setState({ spotifyAuthenticated: data.status });
+    //   console.log(data.status);
 
+    // need to change to async
+    if (response.status) {
+      const res2 = await axios.get("/spotify/get-auth-url");
+      const res3 = res2.data;
+      const res4 = res2.data.url;
+      console.log(res3);
+      console.log(res4);
+      //// this reirects to spotify
+      window.location.replace(res4);
+
+      console.log(spotifyAuthentication);
+      console.log(
+        "connected!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+      );
+    }
+    // });
+  };
   const handleGusetChange = (e) => {
     setguestCanPause(e.target.value === "true" ? true : false);
   };

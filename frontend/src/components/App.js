@@ -128,11 +128,11 @@ const App = () => {
         <Route index element={<Homepage dataone={dataone} />} />
 
         <Route path="/join" element={<JoinRoomPage />} />
-        <Route path="/create" element={<CreateRoomPage catchData={catchData}/>} />
         <Route
-          path="/room/:roomcode"
-          element={<Room  />}
+          path="/create"
+          element={<CreateRoomPage catchData={catchData} />}
         />
+        <Route path="/room/:roomcode" element={<Room />} />
       </Route>
     )
   );

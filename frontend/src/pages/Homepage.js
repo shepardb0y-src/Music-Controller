@@ -60,7 +60,7 @@ const Homepage = ({ dataone }) => {
     setRoomCode(response.data.code);
     console.log(
       roomcode,
-      "state change of room code should be response, used to only happen when i would join the room manually now it shows when i create the room"
+      "state change of room code should be response, used to only happen when i would join the room manually now it shows when i create the room, now dosent work for spotify redirect "
     );
 
     // data === roomcode && props === true
@@ -75,7 +75,9 @@ const Homepage = ({ dataone }) => {
     //nullish coalacing to direct route to hompage if the response is falsy or nll then i made a if statment if trthy to navigate to the room page.
     response ?? navigate("/");
     if (response.data.code) {
-      setRoomCode({ roomcode: null });
+      console.log(response);
+      console.log(roomcode);
+      // setRoomCode({ roomcode: null });
       navigate("/room/" + roomcode);
     } else navigate("/");
   };

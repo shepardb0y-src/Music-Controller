@@ -31,14 +31,14 @@ const Room = ({ catchData, setUser }) => {
   let params1 = params.roomcode;
   console.log(params1, "paramsroompage"); // "hotspur"
   // catchdata(params, "params trying to be lifted");
-  const test = location.pathname;
+  const [test, setTest] = useState(null);
   // console.log(test);
   console.log(login, "initialized login as true");
 
   useEffect(() => {
     fetchData();
     console.log(`didMount:`);
-  }, []);
+  }, [isHost]);
 
   const fetchData = async () => {
     const response = await axios.get(
@@ -49,9 +49,31 @@ const Room = ({ catchData, setUser }) => {
     setvotesToSkip(data.votes_to_skip);
     setHost(data.is_host.toString());
     setguestCanPause(data.guest_can_pause.toString());
+    setTest(true);
+    console.log(isHost, test, "host and test");
     // isHost ? authenticateSpotify() : null;
     // i need an if statment here to ensure the host is tru then to launch the authentatoin function
-    authenticateSpotify();
+    //i think this is whuy im am on a loop i need to make ethese adjusrments :)
+
+    // authenticateSpotify();
+    // if (isHost && test) {
+    //   //   const res2 = await axios.post("/join-room", codez, {
+    //   //   headers: {
+    //   //     "Content-Type": "application/json",
+    //   //     "X-CSRFToken": csrftoken,
+    //   //   },
+    //   // }); //returns the data from api differ from fetch by not need another
+    //   // // .then((response) => response)
+    //   // // .then((res) =>  navigate(`/room/${roomCode}`));
+    //   // const res3 = res2.data;
+    //   // console.log(res3);
+    //   // if (res2.status === 200) {
+    //   //   // Handle success
+
+    //   //   console.log("Request was successful:", res2.status);
+    //   // }
+    //   authenticateSpotify();
+    // }
   };
 
   const leaveRoomCode = () => {
@@ -68,18 +90,6 @@ const Room = ({ catchData, setUser }) => {
       .then((res) => navigate("/"));
   };
 
-  // const fetchData = async () => {
-
-  //   const response = await axios.get(
-  //     "/get-room" + "?code=" + roomCode.params.roomcode
-  //   );
-  //   const data = response.data;
-  //   console.log(data, "room response.data");
-  //   setvotesToSkip(data.votes_to_skip);
-  //   setHost(data.is_host.toString());
-  //   setguestCanPause(data.guest_can_pause.toString());
-
-  // };
   const authenticateSpotify = async () => {
     const response = await axios.get("/spotify/is-authenticated");
     //data.status
