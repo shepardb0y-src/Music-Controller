@@ -17,6 +17,9 @@ import UserContext from "./UserContext";
 const Room = ({ catchData, setUser }) => {
   // const { cox, setCox } = useContext(UseContext);
   const [guestCanPause, setguestCanPause] = useState(true);
+  const [currentSong, setcurrentSong] = useState("");
+  const [artist, setArtist] = useState("");
+  const [images, setImages] = useState("");
   const [votesToSkip, setvotesToSkip] = useState(0);
   const [isHost, setHost] = useState(false);
   let navigate = useNavigate();
@@ -38,6 +41,7 @@ const Room = ({ catchData, setUser }) => {
   useEffect(() => {
     fetchData();
     console.log(`didMount:`);
+    getCurrentSong();
   }, [isHost]);
 
   const fetchData = async () => {
@@ -112,26 +116,44 @@ const Room = ({ catchData, setUser }) => {
     }
     // });
   };
+  const getCurrentSong = async () => {
+    const response = await axios.get("/spotify/current-song");
+    //data.status
+    console.log(response.data.item.album.images[0].url);
+    console.log(response);
+    setArtist(response.data.item.artists[0].name);
+    setcurrentSong(response.data.item.name);
+    setImages(response.data.item.album.images[0].url);
+    // console.log(response);
+    // console.log(response);
+    // console.log(response);
+
+    // # item = response.get('item')
+    // # duration = item.get('duration_ms')
+    // # progress = response.get('progress_ms')
+    // # album_cover = item.get('album').get('images')[0].get('url')
+    // # is_playing = response.get('is_playing')
+    // # song_id = item.get('id')
+
+    // });
+  };
 
   return (
     <div>
-      <h3>{roomCode.params.roomcode}</h3>
-      <p>Votes:{votesToSkip}</p>
-      {console.log(guestCanPause)}
-      <p>Gust Can Pause:{guestCanPause}</p>
-      <p>Host:{isHost}</p>
-      <p>Host:{value}</p>
-      {console.log(isHost)}
-      {/* <p>Gust Can Pause:{guestCanPause.toString()}</p>
-      <p>Host:{isHost.toString()}</p> */}
+      <h1>Artist : {artist}</h1>
+      <h2>Album Cover</h2>
+      <img src={images} alt="Album Cover" />
+      <h1>Current Song : {currentSong}</h1>
 
-      {/*leave room button  GOES HERE*/}
+      <p>Host:{isHost}</p>
+      {console.log(isHost)}
 
       <div>
         <Button onClick={leaveRoomCode}>Leave Rooom</Button>
       </div>
-      <Link to="/">
-        <Button>Go Home</Button>
+
+      <Link to="/join">
+        <Button>Join a Room</Button>
       </Link>
     </div>
   );
