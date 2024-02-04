@@ -17,6 +17,7 @@ import UserContext from "./UserContext";
 import LinearProgress from "@mui/material/LinearProgress";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
+import SkipNextIcon from "@mui/icons-material/SkipNext";
 
 const Room = ({ catchData, setUser }) => {
   // const { cox, setCox } = useContext(UseContext);
@@ -167,6 +168,7 @@ const Room = ({ catchData, setUser }) => {
       <h3>Artist : {artist}</h3>
 
       {isPlaying ? <PlayArrowIcon /> : <PauseIcon />}
+      <SkipNextIcon />
       <LinearProgress variant="determinate" value={songProgress} />
 
       <p>Host:{isHost}</p>
