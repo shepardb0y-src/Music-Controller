@@ -14,6 +14,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import Button from "@mui/material/Button";
 import UserContext from "./UserContext";
+import LinearProgress from "@mui/material/LinearProgress";
+
 const Room = ({ catchData, setUser }) => {
   // const { cox, setCox } = useContext(UseContext);
   // # item = response.get('item')
@@ -130,6 +132,7 @@ const Room = ({ catchData, setUser }) => {
     }
     // });
   };
+
   const getCurrentSong = async () => {
     const response = await axios.get("/spotify/current-song");
     //data.status
@@ -153,15 +156,14 @@ const Room = ({ catchData, setUser }) => {
     // # album_cover = item.get('album').get('images')[0].get('url')
     // # is_playing = response.get('is_playing')
     // # song_id = item.get('id')
-
-    // });
   };
-
+  const songProgress = (progress / duration) * 100;
   return (
     <div>
       <img src={images} alt="Album Cover" />
       <h2>Current Song : {currentSong}</h2>
       <h3>Artist : {artist}</h3>
+      <LinearProgress variant="determinate" value={songProgress} />
 
       <p>Host:{isHost}</p>
       <p>Room Code:{params.roomcode}</p>
