@@ -16,7 +16,17 @@ import Button from "@mui/material/Button";
 import UserContext from "./UserContext";
 const Room = ({ catchData, setUser }) => {
   // const { cox, setCox } = useContext(UseContext);
+  // # item = response.get('item')
+  // # duration = item.get('duration_ms')
+  // # progress = response.get('progress_ms')
+  // # album_cover = item.get('album').get('images')[0].get('url')
+  // # is_playing = response.get('is_playing')
+  // # song_id = item.get('id')
   const [guestCanPause, setguestCanPause] = useState(true);
+  const [duration, setDuration] = useState("");
+  const [progress, setProgress] = useState("");
+  const [isPlaying, setIsPlaying] = useState("");
+  const [songId, setSongId] = useState("");
   const [currentSong, setcurrentSong] = useState("");
   const [artist, setArtist] = useState("");
   const [images, setImages] = useState("");
@@ -41,7 +51,10 @@ const Room = ({ catchData, setUser }) => {
   useEffect(() => {
     fetchData();
     console.log(`didMount:`);
-    getCurrentSong();
+    // getCurrentSong();
+    setInterval(() => {
+      getCurrentSong();
+    }, 1000);
   }, [isHost]);
 
   const fetchData = async () => {
@@ -50,6 +63,7 @@ const Room = ({ catchData, setUser }) => {
     );
     const data = response.data;
     console.log(data, "room response.data");
+
     setvotesToSkip(data.votes_to_skip);
     setHost(data.is_host.toString());
     setguestCanPause(data.guest_can_pause.toString());
@@ -124,9 +138,14 @@ const Room = ({ catchData, setUser }) => {
     setArtist(response.data.item.artists[0].name);
     setcurrentSong(response.data.item.name);
     setImages(response.data.item.album.images[0].url);
-    // console.log(response);
-    // console.log(response);
-    // console.log(response);
+    setDuration(response.data.item.duration_ms);
+    setProgress(response.data.progress_ms);
+    setIsPlaying(response.data.is_playing);
+    setSongId(response.data.item.id);
+    console.log(response.data.item.duration_ms, "duration");
+    console.log(response.data.progress_ms, "progress");
+    console.log(response.data.is_playing, "isplaying");
+    console.log(response.data.item.id, "song id");
 
     // # item = response.get('item')
     // # duration = item.get('duration_ms')
@@ -140,21 +159,21 @@ const Room = ({ catchData, setUser }) => {
 
   return (
     <div>
-      <h1>Artist : {artist}</h1>
-      <h2>Album Cover</h2>
       <img src={images} alt="Album Cover" />
-      <h1>Current Song : {currentSong}</h1>
+      <h2>Current Song : {currentSong}</h2>
+      <h3>Artist : {artist}</h3>
 
       <p>Host:{isHost}</p>
+      <p>Room Code:{params.roomcode}</p>
+
       {console.log(isHost)}
 
       <div>
+        <Link to="/join">
+          <Button>Join a Room</Button>
+        </Link>
         <Button onClick={leaveRoomCode}>Leave Rooom</Button>
       </div>
-
-      <Link to="/join">
-        <Button>Join a Room</Button>
-      </Link>
     </div>
   );
 };
