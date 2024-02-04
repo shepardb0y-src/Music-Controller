@@ -15,6 +15,8 @@ import Cookies from "js-cookie";
 import Button from "@mui/material/Button";
 import UserContext from "./UserContext";
 import LinearProgress from "@mui/material/LinearProgress";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import PauseIcon from "@mui/icons-material/Pause";
 
 const Room = ({ catchData, setUser }) => {
   // const { cox, setCox } = useContext(UseContext);
@@ -163,6 +165,8 @@ const Room = ({ catchData, setUser }) => {
       <img src={images} alt="Album Cover" />
       <h2>Current Song : {currentSong}</h2>
       <h3>Artist : {artist}</h3>
+
+      {isPlaying ? <PlayArrowIcon /> : <PauseIcon />}
       <LinearProgress variant="determinate" value={songProgress} />
 
       <p>Host:{isHost}</p>
