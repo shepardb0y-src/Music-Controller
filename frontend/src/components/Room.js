@@ -18,6 +18,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
+import IconButton from "@mui/material/IconButton";
 
 const Room = ({ catchData, setUser }) => {
   // const { cox, setCox } = useContext(UseContext);
@@ -60,6 +61,7 @@ const Room = ({ catchData, setUser }) => {
     setInterval(() => {
       getCurrentSong();
     }, 1000);
+    pauseSong();
   }, [isHost]);
 
   const fetchData = async () => {
@@ -160,6 +162,38 @@ const Room = ({ catchData, setUser }) => {
     // # is_playing = response.get('is_playing')
     // # song_id = item.get('id')
   };
+
+  const pauseSong = () => {
+    // const csrftoken = Cookies.get("csrftoken");
+    const res = axios.put(
+      "/spotify/pause",
+      {},
+      {
+        headers: {
+          // "X-CSRFToken": csrftoken,
+        },
+      }
+    ); //returns the data from api differ from fetch by not need another
+
+    const response = res;
+    console.log(response);
+  };
+
+  const playSong = () => {
+    // const csrftoken = Cookies.get("csrftoken");
+    const res = axios.put("/spotify/play", {
+      headers: {
+        "Content-Type": "application/json",
+        // "X-CSRFToken": csrftoken,
+      },
+    }); //returns the data from api differ from fetch by not need another
+
+    const response = res.data;
+    console.log(response);
+
+    /// im getting the error prmise is pending
+  };
+
   const songProgress = (progress / duration) * 100;
   return (
     <div>
@@ -167,7 +201,17 @@ const Room = ({ catchData, setUser }) => {
       <h2>Current Song : {currentSong}</h2>
       <h3>Artist : {artist}</h3>
 
-      {isPlaying ? <PlayArrowIcon /> : <PauseIcon />}
+      <IconButton
+        aria-label="button container"
+        onClick={() => {
+          console.log("clicked");
+          // isPlaying ? playSong() : pauseSong();
+          pauseSong();
+        }}
+      >
+        {isPlaying ? <PlayArrowIcon /> : <PauseIcon />}
+      </IconButton>
+
       <SkipNextIcon />
       <LinearProgress variant="determinate" value={songProgress} />
 
