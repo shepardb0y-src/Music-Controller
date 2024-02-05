@@ -61,7 +61,7 @@ const Room = ({ catchData, setUser }) => {
     setInterval(() => {
       getCurrentSong();
     }, 1000);
-    pauseSong();
+    playSong();
   }, [isHost]);
 
   const fetchData = async () => {
@@ -204,9 +204,8 @@ const Room = ({ catchData, setUser }) => {
       <IconButton
         aria-label="button container"
         onClick={() => {
-          console.log("clicked");
-          // isPlaying ? playSong() : pauseSong();
-          pauseSong();
+          isPlaying ? pauseSong() : playSong();
+          // playSong() ? pauseSong() : playSong();
         }}
       >
         {isPlaying ? <PlayArrowIcon /> : <PauseIcon />}
