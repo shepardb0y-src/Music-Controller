@@ -24,4 +24,3 @@ urlpatterns = [
     path('create', index),
     path('room/<str:roomCode>', index)
 ]
-
