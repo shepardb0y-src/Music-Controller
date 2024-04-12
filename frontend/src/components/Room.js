@@ -194,6 +194,29 @@ const Room = ({ catchData, setUser }) => {
     /// im getting the error prmise is pending
   };
 
+  const skipSong = () => {
+    const csrftoken = Cookies.get("csrftoken");
+    const res = axios
+      .post(
+        "/spotify/skip",
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrftoken,
+          },
+        }
+      )
+      .then((response) => {
+        // Handle response if needed
+        console.log(response);
+      })
+      .catch((error) => {
+        // Handle error if needed
+        console.error(error);
+      });
+  };
+
   const songProgress = (progress / duration) * 100;
   return (
     <div>
@@ -210,8 +233,14 @@ const Room = ({ catchData, setUser }) => {
       >
         {isPlaying ? <PlayArrowIcon /> : <PauseIcon />}
       </IconButton>
+      <IconButton
+        onClick={() => {
+          skipSong();
+        }}
+      >
+        <SkipNextIcon />
+      </IconButton>
 
-      <SkipNextIcon />
       <LinearProgress variant="determinate" value={songProgress} />
 
       <p>Host:{isHost}</p>
