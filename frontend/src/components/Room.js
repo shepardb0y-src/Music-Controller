@@ -74,8 +74,8 @@ const Room = ({ catchData, setUser }) => {
     setvotesToSkip(data.votes_to_skip);
     setHost(data.is_host.toString());
     setguestCanPause(data.guest_can_pause.toString());
-    setTest(true);
-    console.log(isHost, test, "host and test");
+    // setTest(true);
+    // console.log(isHost, test, "host and test");
     // isHost ? authenticateSpotify() : null;
     // i need an if statment here to ensure the host is tru then to launch the authentatoin function
     //i think this is whuy im am on a loop i need to make ethese adjusrments :)
@@ -140,27 +140,17 @@ const Room = ({ catchData, setUser }) => {
 
   const getCurrentSong = async () => {
     const response = await axios.get("/spotify/current-song");
-    //data.status
-    console.log(response.data.item.album.images[0].url);
-    console.log(response);
-    setArtist(response.data.item.artists[0].name);
-    setcurrentSong(response.data.item.name);
-    setImages(response.data.item.album.images[0].url);
-    setDuration(response.data.item.duration_ms);
-    setProgress(response.data.progress_ms);
-    setIsPlaying(response.data.is_playing);
-    setSongId(response.data.item.id);
-    console.log(response.data.item.duration_ms, "duration");
-    console.log(response.data.progress_ms, "progress");
-    console.log(response.data.is_playing, "isplaying");
-    console.log(response.data.item.id, "song id");
 
-    // # item = response.get('item')
-    // # duration = item.get('duration_ms')
-    // # progress = response.get('progress_ms')
-    // # album_cover = item.get('album').get('images')[0].get('url')
-    // # is_playing = response.get('is_playing')
-    // # song_id = item.get('id')
+    console.log(response);
+    console.log(response.data.image_url);
+
+    setArtist(response.data.artist);
+    setcurrentSong(response.data.title);
+    setImages(response.data.image_url);
+    setDuration(response.data.duration);
+    setProgress(response.data.time);
+    setIsPlaying(response.data.is_playing);
+    setSongId(response.data.id);
   };
 
   const pauseSong = () => {
@@ -191,7 +181,7 @@ const Room = ({ catchData, setUser }) => {
     const response = res.data;
     console.log(response);
 
-    /// im getting the error prmise is pending
+    // / im getting the error prmise is pending
   };
 
   const skipSong = () => {
