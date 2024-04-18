@@ -46,6 +46,7 @@ const Room = ({ catchData, setUser }) => {
   const [spotifyAuthentication, setspotifyAuthentication] = useState(false);
   const value = useContext(UserContext);
   console.log(location, " useLocation Hook");
+  const [votes, setVotes] = useState(0);
   let params = useParams();
   let params1 = params.roomcode;
   console.log(params1, "paramsroompage"); // "hotspur"
@@ -151,6 +152,8 @@ const Room = ({ catchData, setUser }) => {
     setProgress(response.data.time);
     setIsPlaying(response.data.is_playing);
     setSongId(response.data.id);
+    setvotesToSkip(response.votes_required);
+    setVotes(response.votes);
   };
 
   const pauseSong = () => {
@@ -186,25 +189,14 @@ const Room = ({ catchData, setUser }) => {
 
   const skipSong = () => {
     const csrftoken = Cookies.get("csrftoken");
-    const res = axios
-      .post(
-        "/spotify/skip",
-        {},
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": csrftoken,
-          },
-        }
-      )
-      .then((response) => {
-        // Handle response if needed
-        console.log(response);
-      })
-      .catch((error) => {
-        // Handle error if needed
-        console.error(error);
-      });
+    const res = axios.post("/spotify/skip", {
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken,
+      },
+    });
+    const response = res.data;
+    console.log(response);
   };
 
   const songProgress = (progress / duration) * 100;
@@ -229,6 +221,7 @@ const Room = ({ catchData, setUser }) => {
         }}
       >
         <SkipNextIcon />
+        {votes} /{votesToSkip}
       </IconButton>
 
       <LinearProgress variant="determinate" value={songProgress} />
