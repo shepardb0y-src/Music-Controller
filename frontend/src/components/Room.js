@@ -46,7 +46,7 @@ const Room = ({ catchData, setUser }) => {
   const [spotifyAuthentication, setspotifyAuthentication] = useState(false);
   const value = useContext(UserContext);
   console.log(location, " useLocation Hook");
-  const [votes, setVotes] = useState(0);
+  const [votes, setVotes] = useState("");
   let params = useParams();
   let params1 = params.roomcode;
   console.log(params1, "paramsroompage"); // "hotspur"
@@ -63,7 +63,7 @@ const Room = ({ catchData, setUser }) => {
       getCurrentSong();
     }, 1000);
     playSong();
-  }, [isHost]);
+  }, [isHost, votes, votesToSkip]);
 
   const fetchData = async () => {
     const response = await axios.get(
@@ -143,6 +143,7 @@ const Room = ({ catchData, setUser }) => {
     const response = await axios.get("/spotify/current-song");
 
     console.log(response);
+
     console.log(response.data.image_url);
 
     setArtist(response.data.artist);
@@ -152,8 +153,9 @@ const Room = ({ catchData, setUser }) => {
     setProgress(response.data.time);
     setIsPlaying(response.data.is_playing);
     setSongId(response.data.id);
-    setvotesToSkip(response.votes_required);
-    setVotes(response.votes);
+    setvotesToSkip(response.data.votes_required);
+    setVotes(response.data.votes);
+    console.log(votes, votesToSkip);
   };
 
   const pauseSong = () => {
@@ -205,7 +207,6 @@ const Room = ({ catchData, setUser }) => {
       <img src={images} alt="Album Cover" />
       <h2>Current Song : {currentSong}</h2>
       <h3>Artist : {artist}</h3>
-
       <IconButton
         aria-label="button container"
         onClick={() => {
@@ -221,16 +222,13 @@ const Room = ({ catchData, setUser }) => {
         }}
       >
         <SkipNextIcon />
-        {votes} /{votesToSkip}
       </IconButton>
-
+      {console.log(votes, votesToSkip)}
+      {votes} {votesToSkip}
       <LinearProgress variant="determinate" value={songProgress} />
-
       <p>Host:{isHost}</p>
       <p>Room Code:{params.roomcode}</p>
-
       {console.log(isHost)}
-
       <div>
         <Link to="/join">
           <Button>Join a Room</Button>
