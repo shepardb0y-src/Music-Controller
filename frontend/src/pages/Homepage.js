@@ -16,9 +16,28 @@ import TextField from "@mui/material/TextField";
 import axios from "axios";
 
 const Container = styled.div`
-  background-color: yellow;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+  background-color: purple;
   height: 100%;
   width: 100%;
+  // flex-direction: column;
+`;
+const HomepageContainer = styled.div`
+  margin: 0 0 500px 0;
+  margin-left: 875px;
+  // display: flex;
+  // align-items: center;
+  // justify-contenr: center;
+`;
+const ElementContainer = styled.div`
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+`;
+const ButtonContainer = styled.div`
+  margin-left: 840px;
 `;
 const Homepage = ({ dataone }) => {
   // const [roomcode, setRoomCode] = useState(null);
@@ -85,18 +104,25 @@ const Homepage = ({ dataone }) => {
   console.log(dataone, "dataone prop, outside of use effect in homepage");
   return (
     <Container>
-      <h1>Homepage</h1>
-      <ButtonGroup
-        variant="contained"
-        aria-label="outlined primary button group"
-      >
-        <Link to="/join">
-          <Button>Join a Room</Button>
-        </Link>
-        <Link to="/create">
-          <Button>Create a Rooom</Button>
-        </Link>
-      </ButtonGroup>
+      <ElementContainer>
+        <HomepageContainer>
+          <h1>Music Ballot</h1>
+        </HomepageContainer>
+        <ButtonContainer>
+          {" "}
+          <ButtonGroup
+            variant="contained"
+            aria-label="outlined primary button group"
+          >
+            <Link to="/join">
+              <Button>Join a Room</Button>
+            </Link>
+            <Link to="/create">
+              <Button>Create a Rooom</Button>
+            </Link>
+          </ButtonGroup>
+        </ButtonContainer>
+      </ElementContainer>
     </Container>
   );
 };

@@ -26,25 +26,11 @@ import UserContext from "./UserContext";
 
 const GlobalStyle = createGlobalStyle`
   /* Add your global styles here */
-  html,body{
-    background-color:red;
-    height: 100%;
-    margin:0;
-    padding:0;
-    }
-    
-    #main{
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    
-    }
+
     #app {
-    width: 100%;
-    height: 100%;
     display: flex;
+    justify-content:center;
+    align-items:center;
     
     }
   /* You can add more global styles as needed */
@@ -137,7 +123,7 @@ const App = () => {
     )
   );
 
-  return <RouterProvider router={router} />;
+  return (<GlobalStyle />), (<RouterProvider router={router} />);
 };
 
 export default App;

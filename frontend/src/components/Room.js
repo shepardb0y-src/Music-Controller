@@ -19,6 +19,31 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import IconButton from "@mui/material/IconButton";
+import styled from "styled-components";
+
+const RoomContainer = styled.div`
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  flex-direction: column;
+  height: 800px;
+  width: 800px;
+`;
+
+const SongInfo = styled.div`
+  // box-sizing: border-box;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  // flex-direction: column;
+  // height: 800px;
+  // width
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+`;
+const VotesToSkip = styled.div``;
 
 const Room = ({ catchData, setUser }) => {
   // const { cox, setCox } = useContext(UseContext);
@@ -203,28 +228,35 @@ const Room = ({ catchData, setUser }) => {
 
   const songProgress = (progress / duration) * 100;
   return (
-    <div>
-      <img src={images} alt="Album Cover" />
-      <h2>Current Song : {currentSong}</h2>
-      <h3>Artist : {artist}</h3>
-      <IconButton
-        aria-label="button container"
-        onClick={() => {
-          isPlaying ? pauseSong() : playSong();
-          // playSong() ? pauseSong() : playSong();
-        }}
-      >
-        {isPlaying ? <PlayArrowIcon /> : <PauseIcon />}
-      </IconButton>
-      <IconButton
-        onClick={() => {
-          skipSong();
-        }}
-      >
-        <SkipNextIcon />
-      </IconButton>
+    <RoomContainer>
+      <SongInfo>
+        <img src={images} alt="Album Cover" />
+        <h2>Current Song : {currentSong}</h2>
+        <h3>Artist : {artist}</h3>
+      </SongInfo>
+      <ButtonContainer>
+        <IconButton
+          aria-label="button container"
+          onClick={() => {
+            isPlaying ? pauseSong() : playSong();
+            // playSong() ? pauseSong() : playSong();
+          }}
+        >
+          {isPlaying ? <PlayArrowIcon /> : <PauseIcon />}
+        </IconButton>
+        <IconButton
+          onClick={() => {
+            skipSong();
+          }}
+        >
+          <SkipNextIcon />{" "}
+          <VotesToSkip>
+            {votes} / {votesToSkip}
+          </VotesToSkip>
+        </IconButton>
+      </ButtonContainer>
       {console.log(votes, votesToSkip)}
-      {votes} {votesToSkip}
+
       <LinearProgress variant="determinate" value={songProgress} />
       <p>Host:{isHost}</p>
       <p>Room Code:{params.roomcode}</p>
@@ -235,7 +267,7 @@ const Room = ({ catchData, setUser }) => {
         </Link>
         <Button onClick={leaveRoomCode}>Leave Rooom</Button>
       </div>
-    </div>
+    </RoomContainer>
   );
 };
 

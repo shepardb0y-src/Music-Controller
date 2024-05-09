@@ -16,8 +16,11 @@ import styled from "styled-components";
 
 const Background = styled.div`
   // background-color: purple;
+  display: flex;
   height: 100%;
   width: 100%;
+  justify-content: center;
+  align-items: center;
 `;
 
 const CreateRoomPage = ({ catchData }) => {
