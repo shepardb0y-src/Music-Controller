@@ -7,7 +7,7 @@ import FormHelperText from "@mui/material/FormHelperText";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { Link, useNavigate, useHistory } from "react-router-dom";
-
+import styled from "styled-components";
 import { useState } from "react";
 
 const JoinRoomPage = () => {
@@ -15,7 +15,7 @@ const JoinRoomPage = () => {
   const [error, setError] = useState(false);
   const [helperText, setHelpertext] = useState("");
   let navigate = useNavigate();
-  
+
   const handleFieldChange = (e) => {
     setRoomCode(e.target.value);
     console.log(roomCode);
@@ -25,16 +25,6 @@ const JoinRoomPage = () => {
     const code = { code: roomCode };
     console.log(code);
     const csrftoken = Cookies.get("csrftoken");
-
-    // axios
-    //   .post("/join-room", code, {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       "X-CSRFToken": csrftoken,
-    //     },
-    //   }) //returns the data from api differ from fetch by not need another
-    //   .then((response) => response)
-    //   .then((res) => console.log(res));
 
     axios
       .post("/join-room", code, {
@@ -61,16 +51,21 @@ const JoinRoomPage = () => {
         console.error("An error occurred:", err);
       });
   };
-  //
+
+  const JoinRoomContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `;
+
   return (
-    <div>
+    <JoinRoomContainer>
       <Grid container spacing={1}>
         <Grid item xs={12} align="center">
           <Typography variant="h4" color="initial">
             JOin a Room
           </Typography>
-        </Grid>
-        <Grid item xs={12}>
+
           <TextField
             error={error}
             label="code"
@@ -79,6 +74,7 @@ const JoinRoomPage = () => {
             helperText={helperText}
             variant="outlined"
             onChange={handleFieldChange}
+            size="small"
           ></TextField>
         </Grid>
         <Grid item xs={12} align="center">
@@ -96,7 +92,7 @@ const JoinRoomPage = () => {
           </Button>
         </Grid>
       </Grid>
-    </div>
+    </JoinRoomContainer>
   );
 };
 
