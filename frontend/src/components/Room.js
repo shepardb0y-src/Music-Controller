@@ -25,9 +25,11 @@ const RoomContainer = styled.div`
   // display: flex;
   // justify-content: center;
   // align-items: center;
+  background-image: url("/images/galaxy-gif.webp")
   flex-direction: column;
   height: 800px;
   width: 800px;
+
 `;
 
 const SongInfo = styled.div`

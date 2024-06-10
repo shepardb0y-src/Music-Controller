@@ -16,28 +16,30 @@ import TextField from "@mui/material/TextField";
 import axios from "axios";
 
 const Container = styled.div`
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
-  background-color: purple;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // background-color: purple;
   height: 100%;
   width: 100%;
   // flex-direction: column;
 `;
 const HomepageContainer = styled.div`
-  margin: 0 0 500px 0;
-  margin-left: 875px;
+  // margin: 0 0 500px 0;
+  // margin-left: 875px;
   // display: flex;
   // align-items: center;
   // justify-contenr: center;
+  // flex-direction: column;
 `;
 const ElementContainer = styled.div`
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 `;
 const ButtonContainer = styled.div`
-  margin-left: 840px;
+  margin-top: 500px;
 `;
 const Homepage = ({ dataone }) => {
   // const [roomcode, setRoomCode] = useState(null);
