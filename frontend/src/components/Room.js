@@ -29,6 +29,7 @@ const RoomContainer = styled.div`
   flex-direction: column;
   height: 800px;
   width: 800px;
+  background-color: black;
 
 `;
 
@@ -45,7 +46,14 @@ const SongInfo = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
 `;
+
 const VotesToSkip = styled.div``;
+const HostRoomDiv = styled.div`
+  background-color: black;
+`;
+const ButtonDiv = styled.div`
+  background-color: black;
+`;
 
 const Room = ({ catchData, setUser }) => {
   // const { cox, setCox } = useContext(UseContext);
@@ -237,7 +245,7 @@ const Room = ({ catchData, setUser }) => {
         <h3>Artist : {artist}</h3>
       </SongInfo>
       <ButtonContainer>
-        <IconButton
+        <IconButton color="purple"
           aria-label="button container"
           onClick={() => {
             isPlaying ? pauseSong() : playSong();
@@ -246,7 +254,7 @@ const Room = ({ catchData, setUser }) => {
         >
           {isPlaying ? <PlayArrowIcon /> : <PauseIcon />}
         </IconButton>
-        <IconButton
+        <IconButton 
           onClick={() => {
             skipSong();
           }}
@@ -260,15 +268,17 @@ const Room = ({ catchData, setUser }) => {
       {console.log(votes, votesToSkip)}
 
       <LinearProgress variant="determinate" value={songProgress} />
-      <p>Host:{isHost}</p>
-      <p>Room Code:{params.roomcode}</p>
+      <HostRoomDiv>
+        <p>Host:{isHost}</p>
+        <p>Room Code:{params.roomcode}</p>{" "}
+        <ButtonDiv>
+          <Link to="/join">
+            <Button>Join a Room</Button>
+          </Link>
+          <Button onClick={leaveRoomCode}>Leave Rooom</Button>
+        </ButtonDiv>
+      </HostRoomDiv>
       {console.log(isHost)}
-      <div>
-        <Link to="/join">
-          <Button>Join a Room</Button>
-        </Link>
-        <Button onClick={leaveRoomCode}>Leave Rooom</Button>
-      </div>
     </RoomContainer>
   );
 };

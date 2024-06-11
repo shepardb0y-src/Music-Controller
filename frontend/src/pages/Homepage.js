@@ -20,8 +20,9 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   // background-color: purple;
-  height: 100%;
-  width: 100%;
+
+  height: 875px;
+  width: 800px;
   // flex-direction: column;
 `;
 const HomepageContainer = styled.div`
@@ -108,7 +109,7 @@ const Homepage = ({ dataone }) => {
     <Container>
       <ElementContainer>
         <HomepageContainer>
-          <h1>Music Ballot</h1>
+          <h1>Vibez</h1>
         </HomepageContainer>
         <ButtonContainer>
           {" "}

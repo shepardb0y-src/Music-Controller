@@ -17,10 +17,12 @@ import styled from "styled-components";
 const Background = styled.div`
   // background-color: purple;
   display: flex;
-  height: 100%;
-  width: 100%;
+  height: 875px;
+  width: 800px;
   justify-content: center;
   align-items: center;
+  // margin-top: 200px;
+  color: goldenrod;
 `;
 
 const CreateRoomPage = ({ catchData }) => {
@@ -117,7 +119,7 @@ const CreateRoomPage = ({ catchData }) => {
     <Background>
       <Grid container spacing={1}>
         <Grid item xs={12} align="center">
-          <Typography variant="h4" color="initial">
+          <Typography variant="h4" color="goldenrod">
             Create Room
           </Typography>
         </Grid>
@@ -128,7 +130,7 @@ const CreateRoomPage = ({ catchData }) => {
             <RadioGroup defaultValue="true" onChange={handleGusetChange}>
               <FormControlLabel
                 value="true"
-                control={<Radio color="primary" />}
+                control={<Radio color="secondary" />}
                 label="Play/Pause"
                 labelPlacement="top"
               />
@@ -145,6 +147,8 @@ const CreateRoomPage = ({ catchData }) => {
         <Grid item xs={12} align="center">
           <FormControl>
             <TextField
+              color="secondary"
+              focused
               type="number"
               size="small"
               onChange={handleVotesChange}
@@ -155,7 +159,9 @@ const CreateRoomPage = ({ catchData }) => {
                 style: { textAlign: "center" },
               }}
             />
-            <FormHelperText>Votes Required To Skip</FormHelperText>
+            <FormHelperText color="goldenrod" focus>
+              Votes Required To Skip
+            </FormHelperText>
           </FormControl>
         </Grid>
 
@@ -170,7 +176,7 @@ const CreateRoomPage = ({ catchData }) => {
         </Grid>
         <Grid item xs={12} align="center">
           {/* to="/" component={Link} */}
-          <Button color="secondary" variant="contained">
+          <Button color="primary" variant="contained">
             Back
           </Button>
         </Grid>
