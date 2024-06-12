@@ -21,8 +21,8 @@ const Container = styled.div`
   justify-content: center;
   // background-color: purple;
 
-  height: 875px;
-  width: 800px;
+  height: 900px;
+  width: 700px;
   // flex-direction: column;
 `;
 const HomepageContainer = styled.div`
@@ -41,6 +41,9 @@ const ElementContainer = styled.div`
 `;
 const ButtonContainer = styled.div`
   margin-top: 500px;
+`;
+const AppTitle = styled.h1`
+  font-size: 5rem;
 `;
 const Homepage = ({ dataone }) => {
   // const [roomcode, setRoomCode] = useState(null);
@@ -109,7 +112,7 @@ const Homepage = ({ dataone }) => {
     <Container>
       <ElementContainer>
         <HomepageContainer>
-          <h1>Vibez</h1>
+          <AppTitle>Vibez App</AppTitle>
         </HomepageContainer>
         <ButtonContainer>
           {" "}

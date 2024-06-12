@@ -27,8 +27,8 @@ const RoomContainer = styled.div`
   // align-items: center;
   background-image: url("/images/galaxy-gif.webp")
   flex-direction: column;
-  height: 800px;
-  width: 800px;
+  height: 700px;
+  width: 700px;
   background-color: black;
 
 `;
@@ -41,6 +41,10 @@ const SongInfo = styled.div`
   // flex-direction: column;
   // height: 800px;
   // width
+  img {
+    height: 665px;
+    width: 700px;
+  }
 `;
 
 const ButtonContainer = styled.div`
@@ -239,36 +243,36 @@ const Room = ({ catchData, setUser }) => {
   const songProgress = (progress / duration) * 100;
   return (
     <RoomContainer>
-      <SongInfo>
-        <img src={images} alt="Album Cover" />
-        <h2>Current Song : {currentSong}</h2>
-        <h3>Artist : {artist}</h3>
-      </SongInfo>
-      <ButtonContainer>
-        <IconButton color="purple"
-          aria-label="button container"
-          onClick={() => {
-            isPlaying ? pauseSong() : playSong();
-            // playSong() ? pauseSong() : playSong();
-          }}
-        >
-          {isPlaying ? <PlayArrowIcon /> : <PauseIcon />}
-        </IconButton>
-        <IconButton 
-          onClick={() => {
-            skipSong();
-          }}
-        >
-          <SkipNextIcon />{" "}
-          <VotesToSkip>
-            {votes} / {votesToSkip}
-          </VotesToSkip>
-        </IconButton>
-      </ButtonContainer>
-      {console.log(votes, votesToSkip)}
-
-      <LinearProgress variant="determinate" value={songProgress} />
       <HostRoomDiv>
+        <SongInfo>
+          <img src={images} alt="Album Cover" />
+          <h2>Current Song : {currentSong}</h2>
+          <h3>Artist : {artist}</h3>
+        </SongInfo>
+        <ButtonContainer>
+          <IconButton
+            color="purple"
+            aria-label="button container"
+            onClick={() => {
+              isPlaying ? pauseSong() : playSong();
+              // playSong() ? pauseSong() : playSong();
+            }}
+          >
+            {isPlaying ? <PlayArrowIcon /> : <PauseIcon />}
+          </IconButton>
+          <IconButton
+            onClick={() => {
+              skipSong();
+            }}
+          >
+            <SkipNextIcon />{" "}
+            <VotesToSkip>
+              {votes} / {votesToSkip}
+            </VotesToSkip>
+          </IconButton>
+        </ButtonContainer>
+        {console.log(votes, votesToSkip)}
+        <LinearProgress variant="determinate" value={songProgress} />
         <p>Host:{isHost}</p>
         <p>Room Code:{params.roomcode}</p>{" "}
         <ButtonDiv>

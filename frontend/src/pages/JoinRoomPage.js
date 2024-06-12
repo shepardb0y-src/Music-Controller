@@ -56,30 +56,38 @@ const JoinRoomPage = () => {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 700px;
+    width: 700px;
+  `;
+
+  const TextfieldDiv = styled.div`
+    background-color: white;
   `;
 
   return (
     <JoinRoomContainer>
       <Grid container spacing={1}>
         <Grid item xs={12} align="center">
-          <Typography variant="h4" color="initial">
+          <Typography variant="h4" color="goldenrod">
             JOin a Room
           </Typography>
-
-          <TextField
-            error={error}
-            label="code"
-            placeholder="Enter Room COde"
-            value={roomCode}
-            helperText={helperText}
-            variant="outlined"
-            onChange={handleFieldChange}
-            size="small"
-          ></TextField>
+          <TextfieldDiv>
+            <TextField
+              color="secondary"
+              error={error}
+              label="code"
+              placeholder="Enter Room COde"
+              value={roomCode}
+              helperText={helperText}
+              variant="outlined"
+              onChange={handleFieldChange}
+              size="small"
+            />
+          </TextfieldDiv>
         </Grid>
         <Grid item xs={12} align="center">
           <Button
-            color="primary"
+            color="secondary"
             variant="contained"
             onClick={handleRoomButtonedPressed}
           >

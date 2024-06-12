@@ -11,25 +11,30 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import Cookies from "js-cookie";
 import axios from "axios";
+import Spinner from "../components/Spinner";
 
 import styled from "styled-components";
 
 const Background = styled.div`
   // background-color: purple;
   display: flex;
-  height: 875px;
-  width: 800px;
+  height: 900px;
+  width: 700px;
   justify-content: center;
   align-items: center;
   // margin-top: 200px;
   color: goldenrod;
 `;
 
+const TextfieldDiv = styled.div`
+  background-color: white;
+`;
 const CreateRoomPage = ({ catchData }) => {
   const [guestCanPause, setguestCanPause] = useState(true);
   const [votesToSkip, setvotesToSkip] = useState(0);
   const [codes, setCodes] = useState("lifted code test");
   const [spotifyAuthentication, setspotifyAuthentication] = useState(false);
+  const [isloading, setIsloading] = useState(false);
   let navigate = useNavigate();
   // console.log(dataone, "we lifiting state!");
 
@@ -44,6 +49,7 @@ const CreateRoomPage = ({ catchData }) => {
     setvotesToSkip(e.target.value);
   };
   const handleRoomButtonedPressed = async (e) => {
+    setIsloading(true);
     authenticateSpotify();
     const data = { votes_to_skip: votesToSkip, guest_can_pause: guestCanPause };
     console.log(data);
@@ -62,6 +68,7 @@ const CreateRoomPage = ({ catchData }) => {
 
     //cant i jopin the room here ?
     navigate("/room/" + code);
+    setIsloading(false);
     // this is going in the url so the UselOcation hook can grab it in the room
     setCodes(code);
     catchData(code);
@@ -119,14 +126,19 @@ const CreateRoomPage = ({ catchData }) => {
     <Background>
       <Grid container spacing={1}>
         <Grid item xs={12} align="center">
-          <Typography variant="h4" color="goldenrod">
-            Create Room
-          </Typography>
+          {!isloading && (
+            <Typography variant="h4" color="goldenrod">
+              Create Room
+            </Typography>
+          )}
+          {isloading && <Spinner />}
         </Grid>
         <Grid item xs={12} align="center">
           <FormControl>
             {/* <input type="hidden" name="csrfmiddlewaretoken" value={csrftoken} /> */}
-            <FormHelperText>Guest control of Playback State</FormHelperText>
+            <FormHelperText color="goldenrod">
+              Guest control of Playback State
+            </FormHelperText>
             <RadioGroup defaultValue="true" onChange={handleGusetChange}>
               <FormControlLabel
                 value="true"
@@ -146,22 +158,25 @@ const CreateRoomPage = ({ catchData }) => {
 
         <Grid item xs={12} align="center">
           <FormControl>
-            <TextField
-              color="secondary"
-              focused
-              type="number"
-              size="small"
-              onChange={handleVotesChange}
-              required={true}
-              defaultValue={votesToSkip}
-              inputProps={{
-                min: 1,
-                style: { textAlign: "center" },
-              }}
-            />
-            <FormHelperText color="goldenrod" focus>
-              Votes Required To Skip
-            </FormHelperText>
+            {" "}
+            <TextfieldDiv>
+              <TextField
+                color="secondary"
+                focused
+                type="number"
+                size="small"
+                onChange={handleVotesChange}
+                required={true}
+                defaultValue={votesToSkip}
+                inputProps={{
+                  min: 1,
+                  style: { textAlign: "center" },
+                }}
+              />{" "}
+              <FormHelperText color="goldenrod">
+                Votes Required To Skip
+              </FormHelperText>
+            </TextfieldDiv>
           </FormControl>
         </Grid>
 
