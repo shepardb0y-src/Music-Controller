@@ -136,9 +136,11 @@ const CreateRoomPage = ({ catchData }) => {
         <Grid item xs={12} align="center">
           <FormControl>
             {/* <input type="hidden" name="csrfmiddlewaretoken" value={csrftoken} /> */}
-            <FormHelperText color="goldenrod">
+            {/* <FormHelperText color="secondary">
               Guest control of Playback State
-            </FormHelperText>
+            </FormHelperText> */}
+
+            <h6>Guest control of Playback State</h6>
             <RadioGroup defaultValue="true" onChange={handleGusetChange}>
               <FormControlLabel
                 value="true"

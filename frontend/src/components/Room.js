@@ -84,6 +84,7 @@ const Room = ({ catchData, setUser }) => {
   const [login, setLogin] = useState(true);
   const [spotifyAuthentication, setspotifyAuthentication] = useState(false);
   const value = useContext(UserContext);
+  const [isloading, setIsloading] = useState(false);
   console.log(location, " useLocation Hook");
   const [votes, setVotes] = useState("");
   let params = useParams();
@@ -95,6 +96,7 @@ const Room = ({ catchData, setUser }) => {
   console.log(login, "initialized login as true");
 
   useEffect(() => {
+    setIsloading(true);
     fetchData();
     console.log(`didMount:`);
     // getCurrentSong();
@@ -102,6 +104,7 @@ const Room = ({ catchData, setUser }) => {
       getCurrentSong();
     }, 1000);
     playSong();
+    setIsloading(false);
   }, [isHost, votes, votesToSkip]);
 
   const fetchData = async () => {
@@ -243,45 +246,50 @@ const Room = ({ catchData, setUser }) => {
   const songProgress = (progress / duration) * 100;
   return (
     <RoomContainer>
-      <HostRoomDiv>
-        <SongInfo>
-          <img src={images} alt="Album Cover" />
-          <h2>Current Song : {currentSong}</h2>
-          <h3>Artist : {artist}</h3>
-        </SongInfo>
-        <ButtonContainer>
-          <IconButton
-            color="purple"
-            aria-label="button container"
-            onClick={() => {
-              isPlaying ? pauseSong() : playSong();
-              // playSong() ? pauseSong() : playSong();
-            }}
-          >
-            {isPlaying ? <PlayArrowIcon /> : <PauseIcon />}
-          </IconButton>
-          <IconButton
-            onClick={() => {
-              skipSong();
-            }}
-          >
-            <SkipNextIcon />{" "}
-            <VotesToSkip>
-              {votes} / {votesToSkip}
-            </VotesToSkip>
-          </IconButton>
-        </ButtonContainer>
-        {console.log(votes, votesToSkip)}
-        <LinearProgress variant="determinate" value={songProgress} />
-        <p>Host:{isHost}</p>
-        <p>Room Code:{params.roomcode}</p>{" "}
-        <ButtonDiv>
-          <Link to="/join">
-            <Button>Join a Room</Button>
-          </Link>
-          <Button onClick={leaveRoomCode}>Leave Rooom</Button>
-        </ButtonDiv>
-      </HostRoomDiv>
+      {isloading ? (
+        <div>hi</div>
+      ) : (
+        <HostRoomDiv>
+          <SongInfo>
+            <img src={images} alt="Album Cover" />
+            <h2>Current Song : {currentSong}</h2>
+            <h3>Artist : {artist}</h3>
+          </SongInfo>
+          <ButtonContainer>
+            <IconButton
+              color="purple"
+              aria-label="button container"
+              onClick={() => {
+                isPlaying ? pauseSong() : playSong();
+                // playSong() ? pauseSong() : playSong();
+              }}
+            >
+              {isPlaying ? <PlayArrowIcon /> : <PauseIcon />}
+            </IconButton>
+            <IconButton
+              onClick={() => {
+                skipSong();
+              }}
+            >
+              <SkipNextIcon />{" "}
+              <VotesToSkip>
+                {votes} / {votesToSkip}
+              </VotesToSkip>
+            </IconButton>
+          </ButtonContainer>
+          {console.log(votes, votesToSkip)}
+          <LinearProgress variant="determinate" value={songProgress} />
+          <p>Host:{isHost}</p>
+          <p>Room Code:{params.roomcode}</p>{" "}
+          <ButtonDiv>
+            <Link to="/join">
+              <Button>Join a Room</Button>
+            </Link>
+            <Button onClick={leaveRoomCode}>Leave Rooom</Button>
+          </ButtonDiv>
+        </HostRoomDiv>
+      )}
+
       {console.log(isHost)}
     </RoomContainer>
   );
