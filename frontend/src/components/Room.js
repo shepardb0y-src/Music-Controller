@@ -49,6 +49,7 @@ const SongInfo = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
+  background-color: purple;
 `;
 
 const VotesToSkip = styled.div``;
