@@ -20,6 +20,7 @@ import PauseIcon from "@mui/icons-material/Pause";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import IconButton from "@mui/material/IconButton";
 import styled from "styled-components";
+import Spinner from "../components/Spinner";
 
 const RoomContainer = styled.div`
   // display: flex;
@@ -85,7 +86,7 @@ const Room = ({ catchData, setUser }) => {
   const [login, setLogin] = useState(true);
   const [spotifyAuthentication, setspotifyAuthentication] = useState(false);
   const value = useContext(UserContext);
-  const [isloading, setIsloading] = useState(false);
+  const [isloading, setIsloading] = useState(true);
   console.log(location, " useLocation Hook");
   const [votes, setVotes] = useState("");
   let params = useParams();
@@ -97,15 +98,20 @@ const Room = ({ catchData, setUser }) => {
   console.log(login, "initialized login as true");
 
   useEffect(() => {
-    setIsloading(true);
+    // setIsloading(true);
     fetchData();
     console.log(`didMount:`);
+    const timer = setTimeout(() => {
+      setIsloading(false);
+    }, 5000);
+
+    // return () => clearTimeout(timer);
     // getCurrentSong();
     setInterval(() => {
       getCurrentSong();
     }, 1000);
     playSong();
-    setIsloading(false);
+    // setIsloading(false);
   }, [isHost, votes, votesToSkip]);
 
   const fetchData = async () => {
@@ -248,7 +254,7 @@ const Room = ({ catchData, setUser }) => {
   return (
     <RoomContainer>
       {isloading ? (
-        <div>hi</div>
+        <Spinner />
       ) : (
         <HostRoomDiv>
           <SongInfo>
