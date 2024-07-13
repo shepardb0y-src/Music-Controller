@@ -103,7 +103,7 @@ const Room = ({ catchData, setUser }) => {
     console.log(`didMount:`);
     const timer = setTimeout(() => {
       setIsloading(false);
-    }, 5000);
+    }, 1500);
 
     // return () => clearTimeout(timer);
     // getCurrentSong();
