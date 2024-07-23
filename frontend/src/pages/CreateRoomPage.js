@@ -26,6 +26,9 @@ const Background = styled.div`
   color: goldenrod;
 `;
 
+const RadioBackground = styled.div`
+  background-color: rgb(175, 43, 191);
+`;
 const TextfieldDiv = styled.div`
   background-color: white;
 `;
@@ -141,20 +144,22 @@ const CreateRoomPage = ({ catchData }) => {
             </FormHelperText> */}
 
             <h6>Guest control of Playback State</h6>
-            <RadioGroup defaultValue="true" onChange={handleGusetChange}>
-              <FormControlLabel
-                value="true"
-                control={<Radio color="secondary" />}
-                label="Play/Pause"
-                labelPlacement="top"
-              />
-              <FormControlLabel
-                value="false"
-                control={<Radio color="secondary" />}
-                label="No Control"
-                labelPlacement="bottom"
-              />
-            </RadioGroup>
+            <RadioBackground>
+              <RadioGroup defaultValue="true" onChange={handleGusetChange}>
+                <FormControlLabel
+                  value="true"
+                  control={<Radio color="primary" />}
+                  label="Play"
+                  labelPlacement="top"
+                />
+                <FormControlLabel
+                  value="Pause"
+                  control={<Radio color="secondary" />}
+                  label="No Control"
+                  labelPlacement="bottom"
+                />
+              </RadioGroup>
+            </RadioBackground>
           </FormControl>
         </Grid>
 
