@@ -154,7 +154,7 @@ const CreateRoomPage = ({ catchData }) => {
                 />
                 <FormControlLabel
                   value="Pause"
-                  control={<Radio color="secondary" />}
+                  control={<Radio color="primary" />}
                   label="No Control"
                   labelPlacement="bottom"
                 />
