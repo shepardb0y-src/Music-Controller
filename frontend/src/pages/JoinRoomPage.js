@@ -69,11 +69,11 @@ const JoinRoomPage = () => {
       <Grid container spacing={1}>
         <Grid item xs={12} align="center">
           <Typography variant="h4" color="goldenrod">
-            JOin a Room
+            Join a Room
           </Typography>
           <TextfieldDiv>
             <TextField
-              color="secondary"
+              color="primary"
               error={error}
               label="code"
               placeholder="Enter Room COde"
@@ -87,7 +87,7 @@ const JoinRoomPage = () => {
         </Grid>
         <Grid item xs={12} align="center">
           <Button
-            color="secondary"
+            color="primary"
             variant="contained"
             onClick={handleRoomButtonedPressed}
           >
@@ -95,7 +95,7 @@ const JoinRoomPage = () => {
           </Button>
         </Grid>
         <Grid item xs={12} align="center">
-          <Button color="secondary" variant="contained" to="/" component={Link}>
+          <Button color="primary" variant="contained" to="/" component={Link}>
             Back
           </Button>
         </Grid>
