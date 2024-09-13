@@ -149,13 +149,13 @@ const CreateRoomPage = ({ catchData }) => {
                 <FormControlLabel
                   value="true"
                   control={<Radio color="primary" />}
-                  label="Play"
+                  label="Can Play"
                   labelPlacement="top"
                 />
                 <FormControlLabel
                   value="Pause"
                   control={<Radio color="primary" />}
-                  label="No Control"
+                  label="Cannot play"
                   labelPlacement="bottom"
                 />
               </RadioGroup>
@@ -198,7 +198,7 @@ const CreateRoomPage = ({ catchData }) => {
         </Grid>
         <Grid item xs={12} align="center">
           {/* to="/" component={Link} */}
-          <Button color="primary" variant="contained">
+          <Button color="primary" variant="contained" to="/" component={Link}>
             Back
           </Button>
         </Grid>
